@@ -1,0 +1,48 @@
+--
+-- Created by IntelliJ IDEA.
+-- User: nander
+-- Date: 02/12/2017
+-- Time: 14:56
+-- To change this template use File | Settings | File Templates.
+--
+local s = {}
+
+s.update = function()
+    local player = E.player[1]
+    if player == nil then
+        return
+    end
+    local camera = E.camera[1]
+    if not camera then return end
+    local width = love.graphics.getWidth( )
+    local height = love.graphics.getHeight( )
+
+    local x , y = width/2, height/2
+    if(camera.position.x + x - camera.camera.x > player.position.x) then
+        camera.position.x = player.position.x - x + camera.camera.x
+    end
+
+    if(camera.position.x + x +  camera.camera.x < player.position.x ) then
+        camera.position.x = player.position.x - x - camera.camera.x
+
+    end
+
+    if(camera.position.y + y - camera.camera.y > player.position.y) then
+        camera.position.y = player.position.y - y + camera.camera.y
+    end
+
+    if(camera.position.y + y +  camera.camera.y < player.position.y ) then
+        camera.position.y = player.position.y - y - camera.camera.y
+
+    end
+
+end
+function s.toX(x)
+    local camera = E.camera[1] or {x=0,y=0 }
+    return x - camera.position.x
+end
+function s.toY(y)
+    local camera = E.camera[1] or {x=0,y=0 }
+    return y - camera.position.y
+end
+return s

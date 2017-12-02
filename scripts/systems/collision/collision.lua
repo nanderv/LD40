@@ -42,7 +42,7 @@ s.ray = function(entity1, from, to)
     return nil
 end
 local function checkCollision(entity1)
-    local shape1 = nil
+    local shape1
     local x1, y1 = entity1.position.x, entity1.position.y
     if s.circles[entity1] then
         shape1 = s.circles[entity1]
@@ -55,7 +55,11 @@ local function checkCollision(entity1)
     for _, b in ipairs(cols) do
         local entity2 = b.other
         if entity1 ~= entity2 then
-
+            if entity1.player and entity2.collision.type=="wall"  then
+                pprint(cols)
+                s.prev[entity1].rotation = entity1.position.rotation
+                entity1.position = s.prev[entity1]
+            end
             -- Check if the collision is necessary. I think this is slightly slower than the previous check, so that's why this one is later. Not tested for speed.
             if lib.check_rule(entity1, entity2) then
                 local p1 = rpo[entity1]
@@ -107,7 +111,9 @@ s.functions.reset = function()
     s.prev = {}
     rpo = {}
 end
+s.functions.preventWallCollision = function()
 
+end
 
 s.registers = {}
 s.registers.collision = function(entity)
