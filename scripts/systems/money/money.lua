@@ -7,7 +7,7 @@ money.multiplier = 100
 
 local txt = ""
 
-local get_money_ent = function()
+money.get_money_ent = function()
     local l = E["hoard"]
     local entity
     for _, v in ipairs(l) do
@@ -35,7 +35,7 @@ end
 money.give_to_son = function(amount)
     if not amount then return end
 
-    local ent = get_money_ent()
+    local ent = money.get_money_ent()
     print(amount .. ":" .. ent.money.total)
     if amount < ent.money.lastgiven * 1.05 or amount > ent.money.total then
         -- Too little money!
@@ -51,7 +51,7 @@ money.give_to_son = function(amount)
 end
 
 money.second = function()
-    local ent = get_money_ent()
+    local ent = money.get_money_ent()
 
     if ent.in_raid then
         local red = math.floor((ent.money.lastleft * 0.03) + (ent.money.totalgiven * 0.05))
@@ -62,19 +62,19 @@ money.second = function()
 end
 
 money.open_chest = function()
-    local ent = get_money_ent()
+    local ent = money.get_money_ent()
 
     ent.money.pocket_treasure = ent.money.pocket_treasure + ((ent.raid_level * money.multiplier) * (1 + math.random()))
 end
 
 money.start_raid = function()
-    local ent = get_money_ent()
+    local ent = money.get_money_ent()
 
     ent.in_raid = true
 end
 
 money.end_raid = function(dead)
-    local ent = get_money_ent()
+    local ent = money.get_money_ent()
 
     ent.money.total, ent.money.pocket_treasure = ent.money.pocket_treasure, 0
     ent.in_raid = false
@@ -82,11 +82,11 @@ money.end_raid = function(dead)
 end
 
 money.get_last_left = function()
-    return get_money_ent().money.lastleft
+    return money.get_money_ent().money.lastleft
 end
 
 money.next_turn = function()
-    local ent = get_money_ent()
+    local ent = money.get_money_ent()
 
     if not ent.son.happy_this_turn then
         return false
@@ -97,7 +97,7 @@ money.next_turn = function()
 end
 
 money.debug_button = function(type)
-    local ent = get_money_ent()
+    local ent = money.get_money_ent()
     pprint(ent.money)
 
     if type == 0 then
@@ -126,15 +126,21 @@ money.debug_button = function(type)
 end
 
 money.show_money = function(ent)
-    love.graphics.print("Total in stash: " .. ent.money.total, 10, 30)
+    local quanta = (love.graphics.getWidth() - 20) / 3
+    local oldfont = love.graphics.getFont()
+    love.graphics.setNewFont(20)
+    love.graphics.printf("Total in stash: " .. ent.money.total, 10, 10, quanta, "center")
+    love.graphics.printf("Treasure in pocket: " .. ent.money.pocket_treasure, 10 + quanta, 10, quanta, "center")
+    love.graphics.printf("Target: " .. math.ceil(ent.money.lastgiven * 1.05), 10 + (2 * quanta), 10, quanta, "center")
+    love.graphics.setFont(oldfont)
+
     love.graphics.print("Last given: " .. ent.money.lastgiven, 10, 50)
     love.graphics.print("Total given: " .. ent.money.totalgiven, 10, 70)
     love.graphics.print("Last left over: " .. ent.money.lastleft, 10, 90)
-    love.graphics.print("Treasure in pcket: " .. ent.money.pocket_treasure, 10, 110)
     if ent.in_raid then
-        love.graphics.print("Raid: Yes", 10, 130)
+        love.graphics.print("Raid: Yes", 10, 110)
     else
-        love.graphics.print("Raid: No", 10, 130)
+        love.graphics.print("Raid: No", 10, 110)
     end
 end
 
