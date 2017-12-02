@@ -44,8 +44,10 @@ end
 
 function ctx:update(dt)
     E.currentframe = E.currentframe + 1
-    scripts.main.mainloop(dt, input.text)
-    suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Chatbox", font = love.graphics.getFont() }, -10, -10, love.graphics.getWidth() + 10, 55)
+    scripts.main.mainloop(dt)
+    suit.layout:reset((love.graphics.getWidth() / 3) * 2, 33)
+    suit.Slider({ value = E.hoard[1].current_turn_len, min = 0, max = 120 }, { id = 'Day progress', valign = "bottom" }, suit.layout:row(love.graphics.getWidth() / 3, 15))
+    suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Chatbox", font = love.graphics.getFont(), valign = "top" }, -10, -10, love.graphics.getWidth() + 10, 55)
 end
 
 
@@ -57,6 +59,7 @@ function ctx:draw()
     love.graphics.push()
     love.graphics.translate(scripts.systems.camera.toX(0), scripts.systems.camera.toY(0))
     scripts.systems.collision.debug_draw(dt)
+
     core.run("dwarf", scripts.systems.rendering.renderDwarf, { dt = dt })
     core.run("player", scripts.systems.rendering.renderDragon, { dt = dt })
     --    scripts.systems.collision.debug_draw(dt)
@@ -72,8 +75,10 @@ function ctx:draw()
     suit.draw()
     core.run("hoard", scripts.systems.money.money.show_money, {})
 
-    love.graphics.print(love.timer.getFPS(), 10, 30)
-    love.graphics.print(collectgarbage('count'), 50, 30)
+    if DEBUG then
+        love.graphics.print(love.timer.getFPS(), 10, 30)
+        love.graphics.print(collectgarbage('count'), 50, 30)
+    end
 end
 
 
@@ -81,5 +86,4 @@ function ctx:leave()
     love.mouse.setGrabbed(false)
     print('leaving')
 end
-
 return ctx

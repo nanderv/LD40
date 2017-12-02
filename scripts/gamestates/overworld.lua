@@ -17,6 +17,7 @@ function ctx:update(dt)
     suit.layout:padding(5)
     suit.layout:push(suit.layout:row(400, 50))
     suit.Input(input, suit.layout:col(275, 50))
+    scripts.systems.money.money.update_text(input.text)
     if suit.Button("Give to son", suit.layout:col(120, 50)).hit then
         scripts.systems.money.money.give_to_son()
     end
@@ -28,9 +29,11 @@ function ctx:update(dt)
         scripts.systems.money.money.next_turn()
     end
 
-    suit._instance:registerDraw(suit._instance.theme.Button, "Chat: <Son's name here> (kid)", {id="Chatbox_Title", font=love.graphics.getFont()}, love.graphics.getWidth() / 2 - 405, 300, 400, 50)
-    suit._instance:registerDraw(suit._instance.theme.Button, "", {id="Chatbox", font=love.graphics.getFont()}, love.graphics.getWidth() / 2 - 405, 355, 400, 105)
-    suit._instance:registerDraw(suit._instance.theme.Button, "", {id="Chatbox", font=love.graphics.getFont()}, -10, -10, love.graphics.getWidth() + 10, 55)
+    suit._instance:registerDraw(suit._instance.theme.Button, "Chat: <Son's name here> (kid)", { id = "Chatbox_Title", font = love.graphics.getFont() }, love.graphics.getWidth() / 2 - 405, 300, 400, 50)
+    suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Chatbox", font = love.graphics.getFont() }, love.graphics.getWidth() / 2 - 405, 355, 400, 105)
+    suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Hotbar", font = love.graphics.getFont() }, -10, -10, love.graphics.getWidth() + 10, 55)
+    suit.layout:reset((love.graphics.getWidth() / 3) * 2, 10)
+    suit.Slider({value = E.hoard[1].current_turn_len, min = 0, max = 120}, {vertical = true, id = 'Day progress'}, suit.layout:row(love.graphics.getWidth() / 3, 40))
     love.graphics.setFont(oldfont)
 end
 
@@ -45,8 +48,10 @@ function ctx:draw()
     suit.draw()
     love.graphics.print("<Son's name here> > Daddy!\n\tCan I PLEASE have more moneys?\n\tI need them for college, and\n\tif I don't get enough, I won't pass!", love.graphics.getWidth() / 2 - 400, 360)
 
-    love.graphics.print(love.timer.getFPS(), 10, 30)
-    love.graphics.print(collectgarbage('count'), 50, 30)
+    if DEBUG then
+        love.graphics.print(love.timer.getFPS(), 10, 30)
+        love.graphics.print(collectgarbage('count'), 50, 30)
+    end
 end
 
 function ctx:leave()

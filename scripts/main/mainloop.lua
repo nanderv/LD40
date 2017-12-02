@@ -1,4 +1,4 @@
-return function(dt, txt)
+return function(dt)
     if love.joystick.getJoystickCount() > 0 then
         core.run("player", scripts.systems.controls.joystick, { dt = dt })
     end
@@ -10,6 +10,6 @@ return function(dt, txt)
     scripts.systems.helpers.relative_position.functions.update(dt)
     scripts.systems.map.areas.update(dt)
 
-    core.run("hoard", scripts.systems.money.money.update, { dt = dt, txt = txt })
+    core.run("hoard", scripts.systems.money.money.update, { dt = dt })
 
 end

@@ -20,11 +20,12 @@ return function(entity, args)
     --    if not hit then
     --        return
     --    end
-
+    if DEBUG then
         DEBUGVALUE = DEBUGVALUE or {}
         DEBUGVALUE[entity.offset] = { pp.x + x1 + ((x2 - x1) * entity.offset), pp.y + y1 + ((y2 - y1) * entity.offset), ep.x, ep.y }
-    --    local mx, my = love.mouse.getX(), love.mouse.getY()
-    --    DEBUGVALUE[1] = { E.camera[1].position.x + mx, E.camera[1].position.y + my, entity.position.x, entity.position.y }
+        local mx, my = love.mouse.getX(), love.mouse.getY()
+        DEBUGVALUE[1] = { E.camera[1].position.x + mx, E.camera[1].position.y + my, entity.position.x, entity.position.y }
+    end
 
     local dx, dy = (pp.x + x1 + ((x2 - x1) * entity.offset)) - ep.x, (pp.y + y1 + ((y2 - y1) * entity.offset)) - ep.y
 
@@ -35,13 +36,13 @@ return function(entity, args)
 
     entity.position.rotation = core.get_rotation(pp,ep)
 
-    --    if math.abs(dy / dx) > math.pi then
-    --        if ep.y > pp.y then
-    --            entity.position.rotation = 0
-    --        else
-    --            entity.position.rotation = math.pi
-    --        end
-    --    end
+    if math.abs(dy / dx) > math.pi then
+        if ep.y > pp.y then
+            entity.position.rotation = 0
+        else
+            entity.position.rotation = math.pi
+        end
+    end
 
     entity.position.x = ep.x
     entity.position.y = ep.y
