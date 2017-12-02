@@ -21,7 +21,8 @@ return function(entity, args)
             while a_rot > math.pi*2 do
                 a_rot = a_rot - math.pi*2
             end
-            if math.abs(a_rot) > 0.01 then
+            if math.abs(a_rot-math.pi) > 0.1 then
+                print(math.abs(a_rot))
                 if a_rot > math.pi then
                     entity.position.rotation = entity.position.rotation  - dt
                 else
