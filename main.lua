@@ -1,4 +1,19 @@
 GS = require "lib.gamestate"
+love.math.setRandomSeed(love.timer.getTime())
+love.math.random()
+love.math.random()
+love.math.random()
+love.math.random()
+love.math.random()
+love.math.random()
+love.math.random()
+love.math.random()
+love.math.random()
+love.math.random()
+love.math.random()
+love.math.random()
+love.math.random()
+love.math.random()
 
 pprint = require 'lib.pprint'
 require 'lib.helpers.core_funcs'

@@ -12,6 +12,9 @@ local input = { text = "" }
 function ctx:enter()
 
     require 'scripts'
+    scripts.systems.map.areas.genAll()
+
+    scripts.systems.map.areas.genArea(0,0, true)
     GS.push(scripts.gamestates.overworld)
     scripts.systems.collision.collision.functions.reset()
     core.system.add(scripts.systems.collision.collision)
@@ -19,10 +22,10 @@ function ctx:enter()
     core.system.add(scripts.systems.helpers.relative_position)
 
     core.entity.add(scripts.entities.camera(0,0))
-    local ent = scripts.entities.dragon(600,600, 0)
+    local ent = scripts.entities.dragon(0.5*32*16,32*20.5*16, 0)
     E.currentframe = 0
     for i = 1, 1000 do
-        core.entity.add(scripts.entities.dwarf(-200 + math.random(1600), -200 + math.random(1600), 0))
+     --   core.entity.add(scripts.entities.dwarf(-200 + math.random(1600), -200 + math.random(1600), 0))
     end
     core.entity.add(ent)
     core.entity.add(HOARD)
@@ -35,8 +38,6 @@ function ctx:enter()
 
     rh.register()
 
-    core.entity.add(scripts.entities.wall(1,1))
-    core.entity.add(scripts.entities.wall(5,5))
 end
 
 
@@ -55,8 +56,10 @@ function ctx:draw()
     love.graphics.setColor(255,255,255)
     love.graphics.push()
     love.graphics.translate( scripts.systems.camera.toX(0), scripts.systems.camera.toY(0) )
-    scripts.systems.collision.debug_draw(dt)
     core.run("player", scripts.systems.rendering.renderDragon, { dt = dt })
+    core.run("player", scripts.systems.rendering.renderDwarf, { dt = dt })
+
+    scripts.systems.collision.debug_draw(dt)
 
     if DEBUGVALUE ~= nil then
         local r, g, b, a = love.graphics.getColor()

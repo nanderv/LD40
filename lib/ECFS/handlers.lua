@@ -38,7 +38,9 @@ core.findHandlerFromSublist = function(name, h)
         end
     end
 end
-
+core.resetHandlers = function()
+    handlers = { type = "list" }
+end
 core.findHandler = function(name)
     return core.findHandlerFromSublist(name, handlers)
 end

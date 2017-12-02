@@ -8,6 +8,7 @@ return function(dt, txt)
     scripts.systems.collision.collision.functions.update(dt)
     scripts.systems.camera.update(dt)
     scripts.systems.helpers.relative_position.functions.update(dt)
+    scripts.systems.map.areas.update(dt)
 
     core.run("hoard", scripts.systems.money.money.update, { dt = dt, txt = txt })
 
