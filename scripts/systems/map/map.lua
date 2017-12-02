@@ -12,7 +12,7 @@ function s.get(x, y)
     return s.map[x .. ":" .. y]
 end
 
-SWIDTH = 32
+SWIDTH = 32*20
 s.pathFind = function(from, to)
     local neighbours = { from }
     local used = {}
@@ -65,8 +65,7 @@ s.pathFind = function(from, to)
 end
 s.registers.mapPosition = function(entity)
     s.map[entity.mapPosition.x .. ":" .. entity.mapPosition.y] = entity
-    entity.position.x = entity.mapPosition.x * SWIDTH
-    entity.position.y = entity.mapPosition.y * SWIDTH
+
 end
 s.unregisters = {}
 s.unregisters.mapPosition = function(entity)

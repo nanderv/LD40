@@ -5,7 +5,7 @@
 -- Time: 13:35
 -- To change this template use File | Settings | File Templates.
 --
-SWIDTH = 32
+local LOCALWIDTH = 32*16
 return function(x,y)
-    return {position={x=x*SWIDTH ,y=y*SWIDTH,rotation=0}, mapPosition={x=x,y=y}, collision = { type = "wall", box = true, polygon = { { x = 0, y = 0 }, { x = SWIDTH, y = 0 }, { x = SWIDTH, y = SWIDTH }, {x=0, y=SWIDTH} }, dynamic = false }}
+    return {position={x=x*LOCALWIDTH ,y=y*LOCALWIDTH,rotation=0}, mapPosition={x=x,y=y}, collision = { type = "wall", box = true, polygon = { { x = 0, y = 0 }, { x = LOCALWIDTH, y = 0 }, { x = LOCALWIDTH, y = LOCALWIDTH }, {x=0, y=LOCALWIDTH} }, dynamic = false }}
 end
