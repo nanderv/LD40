@@ -15,7 +15,7 @@ function love.load()
     core.entity.add(scripts.entities.camera(0,0))
     local ent = scripts.entities.dragon(600,600, 0)
     core.entity.add(ent)
-    core.entity.add(scripts.entities.test(200,0,ent))
+    core.entity.add(scripts.entities.dragonHead(ent))
     local h1 = core.newHandler("mouse", function(event) return event.type=="mouseclick" end, {type = "list"})
 
     -- Hoard
@@ -26,7 +26,6 @@ function love.load()
 
     core.entity.add(scripts.entities.wall(1,1))
     core.entity.add(scripts.entities.wall(5,5))
-    pprint(core.findHandler("test"))
 
 end
 
@@ -51,12 +50,20 @@ function love.update(dt)
 end
 
 function love.draw()
+
+    love.graphics.setColor(0,0,255)
+    love.graphics.rectangle("fill",0,0,10000,10000)
+    love.graphics.setColor(255,255,255)
     love.graphics.push()
     love.graphics.translate( scripts.systems.camera.toX(0), scripts.systems.camera.toY(0) )
+    core.run("player", scripts.systems.rendering.renderDragon, { dt = dt })
+
     scripts.systems.collision.debug_draw(dt)
     core.run("wiskers", scripts.systems.draw_wiskers, {dt=dt})
+
     love.graphics.pop()
     core.run("hoard", scripts.systems.money.money.show_money, {})
+
     suit.draw()
     love.graphics.print(love.timer.getFPS(), 10, 10)
     love.graphics.print(collectgarbage('count'), 50, 10)

@@ -9,4 +9,5 @@ return function(dt, txt)
     scripts.systems.helpers.relative_position.functions.update(dt)
 
     core.run("hoard", scripts.systems.money.money.update, { dt = dt, txt = txt })
+
 end
