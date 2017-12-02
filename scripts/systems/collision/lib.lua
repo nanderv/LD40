@@ -161,7 +161,7 @@ f.rotate_poly = function(entity)
 end
 
 f.trivial_solve = function(entity1, entity2, prev)
-    entity1.position = prev
+    entity1.position.x, entity1.position.y, entity1.position.rotation = prev.x, prev.y, prev.rotation
 end
 
 return f
