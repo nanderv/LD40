@@ -1,18 +1,9 @@
 return function(entity, args)
     local dt = args.dt
     local mx, my = love.mouse.getX(), love.mouse.getY()
-    local px, py = scripts.systems.camera.toX(entity.position.x), scripts.systems.camera.toY(entity.position.y)
 
-    local dx, dy = mx - px, my - py
+    entity.position.rotation = core.get_rotation(entity.position,{ x = E.camera[1].position.x + mx, y = E.camera[1].position.y + my })
     local old_rot = entity.position.rotation
-    local positive = true
-    if mx > px then
-        positive = false
-        entity.position.rotation = math.atan(dy / dx) - math.pi / 2
-    else
-
-        entity.position.rotation = math.atan(dy / dx) + math.pi / 2
-    end
     local p = E.player[1].position
     local dR = entity.position.rotation - p.rotation + math.pi
     while dR < 0 do

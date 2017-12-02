@@ -15,7 +15,6 @@ return function(entity, args)
     local x1, y1 = pol[1].x, pol[1].y
     local x2, y2 = pol[3].x, pol[3].y
 
-
     --    local hit, x1, y1, x2, y2 = scripts.systems.collision.lib.line_in_polygon(scripts.systems.collision.lib.rotate_poly(E.player[1]), ep, pp, pp, { x = 0, y = 0 })
 
     --    if not hit then
@@ -35,11 +34,7 @@ return function(entity, args)
 
     --    print(dy, dx, dy / dx, math.atan(dy / dx))
 
-    if ep.x >= pp.x then
-        entity.position.rotation = math.atan(dy / dx) - math.pi / 2
-    else
-        entity.position.rotation = math.atan(dy / dx) + math.pi / 2
-    end
+    entity.position.rotation = core.get_rotation(pp,ep)
 
     if math.abs(dy / dx) > math.pi then
         if ep.y > pp.y then
