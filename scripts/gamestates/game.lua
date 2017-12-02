@@ -12,6 +12,8 @@ local input = { text = "" }
 function ctx:enter()
 
     require 'scripts'
+    scripts.systems.map.areas.generateRoomGenerators()
+    scripts.systems.map.areas.genArea(0,0, true)
     GS.push(scripts.gamestates.overworld)
     scripts.systems.collision.collision.functions.reset()
     core.system.add(scripts.systems.collision.collision)
@@ -28,10 +30,6 @@ function ctx:enter()
     ent = { money = { total = 0, lastgiven = 952, totalgiven = 0, lastleft = 0, pocket_treasure = 0 }, son = { happy_this_turn = false }, current_turn_len = 0, current_second_progress = 0, in_raid = false, raid_level = 1 }
     core.entity.add(ent)
 
-    rh.register()
-
-    core.entity.add(scripts.entities.wall(1,1))
-    core.entity.add(scripts.entities.wall(5,5))
 end
 
 
@@ -49,6 +47,7 @@ function ctx:draw()
     love.graphics.push()
     love.graphics.translate( scripts.systems.camera.toX(0), scripts.systems.camera.toY(0) )
     core.run("player", scripts.systems.rendering.renderDragon, { dt = dt })
+    core.run("player", scripts.systems.rendering.renderDwarf, { dt = dt })
 
     scripts.systems.collision.debug_draw(dt)
 

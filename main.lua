@@ -1,5 +1,5 @@
 GS = require "lib.gamestate"
-
+love.math.setRandomSeed(love.timer.getTime())
 pprint = require 'lib.pprint'
 require 'lib.helpers.core_funcs'
 require 'lib.ECFS'

@@ -5,7 +5,9 @@
 -- Time: 16:41
 -- To change this template use File | Settings | File Templates.
 --
+local resource = love.graphics.newImage("assets/images/sprites/dwarf/dwarf0.png")
 
 return function(entity)
+    love.graphics.draw(resource,entity.position.x, entity.position.y, entity.position.rotation, 1, 1, resource:getWidth()/2, resource:getHeight()/2)
 
 end
