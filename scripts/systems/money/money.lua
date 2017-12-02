@@ -1,4 +1,4 @@
-local daylen = 1 -- seconds
+local daylen = 120 -- seconds
 
 local money = {}
 
@@ -15,17 +15,20 @@ money.get_money_ent = function()
     end
 end
 
+money.update_text = function(text)
+    txt = text
+end
+
 money.update = function(entity, args)
     local ent = entity
     ent.current_turn_len = ent.current_turn_len + args.dt
     ent.current_second_progress = ent.current_second_progress + args.dt
-    txt = args.txt
 
-    --    if ent.current_turn_len >= daylen then
-    --        ent.current_turn_len = 0
-    --
-    --        local gameover = not money.next_turn()
-    --    end
+    if ent.current_turn_len >= daylen then
+        ent.current_turn_len = 0
+
+--        local gameover = not money.next_turn()
+    end
     if ent.current_second_progress >= daylen then
         ent.current_second_progress = 0
         money.second()
@@ -142,16 +145,18 @@ money.show_money = function(ent)
     love.graphics.setNewFont(20)
     love.graphics.printf("Total in stash: " .. ent.money.total, 10, 10, quanta, "center")
     love.graphics.printf("Treasure in pocket: " .. ent.money.pocket_treasure, 10 + quanta, 10, quanta, "center")
-    love.graphics.printf("Target: " .. math.ceil(ent.money.lastgiven * 1.05), 10 + (2 * quanta), 10, quanta, "center")
+    love.graphics.printf("Day progress", 10 + (2 * quanta), 10, quanta, "center")
     love.graphics.setFont(oldfont)
 
-    love.graphics.print("Last given: " .. ent.money.lastgiven, 10, 50)
-    love.graphics.print("Total given: " .. ent.money.totalgiven, 10, 70)
-    love.graphics.print("Last left over: " .. ent.money.lastleft, 10, 90)
-    if ent.in_raid then
-        love.graphics.print("Raid: Yes", 10, 110)
-    else
-        love.graphics.print("Raid: No", 10, 110)
+    if DEBUG then
+        love.graphics.print("Last given: " .. ent.money.lastgiven, 10, 50)
+        love.graphics.print("Total given: " .. ent.money.totalgiven, 10, 70)
+        love.graphics.print("Last left over: " .. ent.money.lastleft, 10, 90)
+        if ent.in_raid then
+            love.graphics.print("Raid: Yes", 10, 110)
+        else
+            love.graphics.print("Raid: No", 10, 110)
+        end
     end
 end
 
