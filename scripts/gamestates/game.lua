@@ -14,24 +14,24 @@ function ctx:enter()
     require 'scripts'
     scripts.systems.map.areas.genAll()
 
-    scripts.systems.map.areas.genArea(0,0, true)
+    scripts.systems.map.areas.genArea(0, 0, true)
     GS.push(scripts.gamestates.overworld)
     scripts.systems.collision.collision.functions.reset()
     core.system.add(scripts.systems.collision.collision)
     core.system.add(scripts.systems.map.map)
     core.system.add(scripts.systems.helpers.relative_position)
 
-    core.entity.add(scripts.entities.camera(0,0))
-    local ent = scripts.entities.dragon(0.5*32*16,32*20.5*16, 0)
+    core.entity.add(scripts.entities.camera(0, 0))
+    local ent = scripts.entities.dragon(0.5 * 32 * 16, 32 * 20.5 * 16, 0)
     E.currentframe = 0
-local spread = 200
-    for i = 1, 1 do
-        core.entity.add(scripts.entities.dwarf(0.5*32*16-spread + math.random(spread*2), 32*20.5*16-spread + math.random(spread*2), 0))
+    local spread = 1000
+    for i = 1, 100 do
+        core.entity.add(scripts.entities.dwarf(0.5 * 32 * 16 - spread + math.random(spread * 2), 32 * 20.5 * 16 - spread + math.random(spread * 2), 0))
     end
     core.entity.add(ent)
     core.entity.add(HOARD)
     core.entity.add(scripts.entities.dragonHead(ent))
-    local h1 = core.newHandler("mouse", function(event) return event.type=="mouseclick" end, {type = "list"})
+    local h1 = core.newHandler("mouse", function(event) return event.type == "mouseclick" end, { type = "list" })
 
     -- Hoard
     ent = { money = { total = 0, lastgiven = 952, totalgiven = 0, lastleft = 0, pocket_treasure = 0 }, son = { happy_this_turn = false }, current_turn_len = 0, current_second_progress = 0, in_raid = false, raid_level = 1 }
@@ -45,21 +45,21 @@ end
 function ctx:update(dt)
     E.currentframe = E.currentframe + 1
     scripts.main.mainloop(dt, input.text)
-    suit._instance:registerDraw(suit._instance.theme.Button, "", {id="Chatbox", font=love.graphics.getFont()}, -10, -10, love.graphics.getWidth() + 10, 55)
+    suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Chatbox", font = love.graphics.getFont() }, -10, -10, love.graphics.getWidth() + 10, 55)
 end
 
 
 function ctx:draw()
 
-    love.graphics.setColor(0,0,255)
-    love.graphics.rectangle("fill",0,0,10000,10000)
-    love.graphics.setColor(255,255,255)
+    love.graphics.setColor(0, 0, 255)
+    love.graphics.rectangle("fill", 0, 0, 10000, 10000)
+    love.graphics.setColor(255, 255, 255)
     love.graphics.push()
-    love.graphics.translate( scripts.systems.camera.toX(0), scripts.systems.camera.toY(0) )
+    love.graphics.translate(scripts.systems.camera.toX(0), scripts.systems.camera.toY(0))
     scripts.systems.collision.debug_draw(dt)
     core.run("dwarf", scripts.systems.rendering.renderDwarf, { dt = dt })
     core.run("player", scripts.systems.rendering.renderDragon, { dt = dt })
---    scripts.systems.collision.debug_draw(dt)
+    --    scripts.systems.collision.debug_draw(dt)
     if DEBUGVALUE ~= nil then
         local r, g, b, a = love.graphics.getColor()
         love.graphics.setColor(255, 0, 0)
@@ -81,4 +81,5 @@ function ctx:leave()
     love.mouse.setGrabbed(false)
     print('leaving')
 end
+
 return ctx
