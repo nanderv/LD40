@@ -13,7 +13,6 @@ return function(entity, args)
 
     if love.mouse.isDown(1) then
         -- FIRE
-        print("FIRE!!!")
     end
     return true, false
 end

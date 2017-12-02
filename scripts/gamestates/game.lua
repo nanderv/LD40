@@ -22,7 +22,12 @@ function ctx:enter()
 
     core.entity.add(scripts.entities.camera(0,0))
     local ent = scripts.entities.dragon(600,600, 0)
+    E.currentframe = 0
+    for i = 1, 1000 do
+        core.entity.add(scripts.entities.dwarf(-200 + math.random(1600), -200 + math.random(1600), 0))
+    end
     core.entity.add(ent)
+    core.entity.add(HOARD)
     core.entity.add(scripts.entities.dragonHead(ent))
     local h1 = core.newHandler("mouse", function(event) return event.type=="mouseclick" end, {type = "list"})
 
@@ -30,11 +35,16 @@ function ctx:enter()
     ent = { money = { total = 0, lastgiven = 952, totalgiven = 0, lastleft = 0, pocket_treasure = 0 }, son = { happy_this_turn = false }, current_turn_len = 0, current_second_progress = 0, in_raid = false, raid_level = 1 }
     core.entity.add(ent)
 
+    rh.register()
+
+    core.entity.add(scripts.entities.wall(1,1))
+    core.entity.add(scripts.entities.wall(5,5))
 end
 
 
 
 function ctx:update(dt)
+    E.currentframe = E.currentframe + 1
     scripts.main.mainloop(dt, input.text)
 end
 
@@ -51,6 +61,14 @@ function ctx:draw()
 
     scripts.systems.collision.debug_draw(dt)
 
+    if DEBUGVALUE ~= nil then
+        local r, g, b, a = love.graphics.getColor()
+        love.graphics.setColor(255, 0, 0)
+        for _, x in pairs(DEBUGVALUE) do
+            love.graphics.line(unpack(x))
+        end
+        love.graphics.setColor(r, g, b, a)
+    end
     love.graphics.pop()
     core.run("hoard", scripts.systems.money.money.show_money, {})
 

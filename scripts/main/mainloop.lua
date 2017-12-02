@@ -4,6 +4,7 @@ return function(dt, txt)
     end
     core.run("player", scripts.systems.controls.wasd, { dt = dt })
     core.run("mouseplayer", scripts.systems.controls.mouse, { dt = dt })
+    core.run("dwarf", scripts.systems.dwarfs.attack_dragon, { dt = dt })
     scripts.systems.collision.collision.functions.update(dt)
     scripts.systems.camera.update(dt)
     scripts.systems.helpers.relative_position.functions.update(dt)
