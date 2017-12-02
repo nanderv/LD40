@@ -5,7 +5,7 @@ local input = { text = "" }
 function ctx:enter(from)
     ctx.from = from
     scripts.systems.money.money.end_raid()
---    core.entity.add(BOARD)
+    core.entity.add(HOARD)
     GS.pop()
 end
 

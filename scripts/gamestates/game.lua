@@ -21,7 +21,7 @@ function ctx:enter()
     core.entity.add(scripts.entities.camera(0,0))
     local ent = scripts.entities.dragon(600,600, 0)
     core.entity.add(ent)
-    core.entity.add(BOARD)
+    core.entity.add(HOARD)
     core.entity.add(scripts.entities.dragonHead(ent))
     local h1 = core.newHandler("mouse", function(event) return event.type=="mouseclick" end, {type = "list"})
 
