@@ -72,7 +72,7 @@ return function(entity, args)
     end
 
     if button.a then
-        print("Fire!")
+        -- Fire
     end
 
     -- vibration
