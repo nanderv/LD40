@@ -8,7 +8,6 @@ return function(entity, args)
         entity.position.x = entity.position.x + math.cos(entity.position.rotation)*  60 * dt
         entity.position.y = entity.position.y + math.sin(entity.position.rotation)* 60 * dt
     end
-    entity.position.rotation = 2
     if love.keyboard.isDown("w") then
         entity.position.x = entity.position.x + math.sin(entity.position.rotation)* 180 * dt
         entity.position.y = entity.position.y - math.cos(entity.position.rotation)* 180 * dt
