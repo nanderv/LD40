@@ -56,7 +56,6 @@ local function checkCollision(entity1)
         local entity2 = b.other
         if entity1 ~= entity2 then
             if entity1.player and entity2.collision.type=="wall"  then
-                pprint(cols)
                 s.prev[entity1].rotation = entity1.position.rotation
                 entity1.position = s.prev[entity1]
             end
