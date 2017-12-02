@@ -9,7 +9,7 @@ function love.load()
     core.system.add(scripts.systems.collision.collision)
     local ent = { LW = {}, collision = { dynamic = true, box = true, type = "test", polygon = { { x = -50, y = -50 }, { x = 50, y = -50 }, { x = 50, y = 500 }, { x = -50, y = 500 } } }, position = { x = 630, y = 290, rotation = 0 } }
     core.entity.add(ent)
-    local ent = { clickable=true, mover=100,light = { minRot = 0, maxRot = 0.5 * math.pi, dist = 300 }, collision = { type = "test", box = true, polygon = { { x = -100, y = 0 }, { x = 0, y = 100 }, { x = 100, y = 0 }, { x = 0, y = -100 } }, dynamic = true }, position = { x = 250, y = 250, rotation = 0 } }
+    local ent = scripts.entities.dragon(100,100, 0)
     core.entity.add(ent)
 
     ent = { collision = nil, position = { x = 250, y = 250, rotation = 0 }, wiskers = { { x = 100, y = 100 }, { x = -100, y = 100 } } }

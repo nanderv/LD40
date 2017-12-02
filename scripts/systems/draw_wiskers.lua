@@ -5,5 +5,4 @@ return function(v, _)
         for l, w in ipairs(v.wiskers) do
             love.graphics.line(sx, sy, w.x + sx, sy + w.y)
         end
-
 end
