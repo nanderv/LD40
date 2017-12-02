@@ -1,8 +1,7 @@
 return function(entity, args)
     local dt = args.dt
-
     local mx, my = love.mouse.getX(), love.mouse.getY()
-    local px, py = entity.position.x, entity.position.y
+    local px, py = scripts.systems.camera.toX(entity.position.x), scripts.systems.camera.toY(entity.position.y)
 
     local dx, dy = mx - px, my - py
 

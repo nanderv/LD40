@@ -6,5 +6,5 @@
 -- To change this template use File | Settings | File Templates.
 --
 return function(x,y)
-    return {camera={x=0, y=0}, position={x=x, y=y} }
+    return {camera={x=50, y=50}, position={x=x, y=y} }
 end
