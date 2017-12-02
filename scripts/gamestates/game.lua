@@ -24,8 +24,9 @@ function ctx:enter()
     core.entity.add(scripts.entities.camera(0, 0))
     local ent = scripts.entities.dragon(0.5 * 32 * 16, 32 * 20.5 * 16, 0)
     E.currentframe = 0
-    for i = 1, 1000 do
-        --   core.entity.add(scripts.entities.dwarf(-200 + math.random(1600), -200 + math.random(1600), 0))
+    local spread = 200
+    for i = 1, 1 do
+        core.entity.add(scripts.entities.dwarf(0.5*32*16-spread + math.random(spread*2), 32*20.5*16-spread + math.random(spread*2), 0))
     end
     core.entity.add(ent)
     core.entity.add(HOARD)
@@ -57,11 +58,10 @@ function ctx:draw()
     love.graphics.setColor(255, 255, 255)
     love.graphics.push()
     love.graphics.translate(scripts.systems.camera.toX(0), scripts.systems.camera.toY(0))
-    core.run("player", scripts.systems.rendering.renderDragon, { dt = dt })
-    core.run("player", scripts.systems.rendering.renderDwarf, { dt = dt })
-
     scripts.systems.collision.debug_draw(dt)
 
+    core.run("dwarf", scripts.systems.rendering.renderDwarf, { dt = dt })
+    core.run("player", scripts.systems.rendering.renderDragon, { dt = dt })
     if DEBUGVALUE ~= nil then
         local r, g, b, a = love.graphics.getColor()
         love.graphics.setColor(255, 0, 0)
