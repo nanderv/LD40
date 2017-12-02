@@ -33,7 +33,7 @@ function ctx:update(dt)
     suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Chatbox", font = love.graphics.getFont() }, love.graphics.getWidth() / 2 - 405, 355, 400, 105)
     suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Hotbar", font = love.graphics.getFont() }, -10, -10, love.graphics.getWidth() + 10, 55)
     suit.layout:reset((love.graphics.getWidth() / 3) * 2, 10)
-    suit.Slider({value = E.hoard[1].current_turn_len, min = 0, max = 120}, {vertical = true, id = 'Day progress'}, suit.layout:row(love.graphics.getWidth() / 3, 40))
+    suit.Slider({value = E.hoard[1].current_turn_len, min = 0, max = 120}, {vertical = true, id = 'Day progress', notMouseEditable = true}, suit.layout:row(love.graphics.getWidth() / 3, 40))
     love.graphics.setFont(oldfont)
 end
 
