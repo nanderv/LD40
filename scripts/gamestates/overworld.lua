@@ -30,6 +30,7 @@ function ctx:update(dt)
 
     suit._instance:registerDraw(suit._instance.theme.Button, "Chat: <Son's name here> (kid)", {id="Chatbox_Title", font=love.graphics.getFont()}, love.graphics.getWidth() / 2 - 405, 300, 400, 50)
     suit._instance:registerDraw(suit._instance.theme.Button, "", {id="Chatbox", font=love.graphics.getFont()}, love.graphics.getWidth() / 2 - 405, 355, 400, 105)
+    suit._instance:registerDraw(suit._instance.theme.Button, "", {id="Chatbox", font=love.graphics.getFont()}, -10, -10, love.graphics.getWidth() + 10, 55)
     love.graphics.setFont(oldfont)
 end
 
