@@ -57,9 +57,9 @@ function ctx:draw()
     love.graphics.push()
     love.graphics.translate( scripts.systems.camera.toX(0), scripts.systems.camera.toY(0) )
     core.run("player", scripts.systems.rendering.renderDragon, { dt = dt })
-    core.run("player", scripts.systems.rendering.renderDwarf, { dt = dt })
+    core.run("dwarf", scripts.systems.rendering.renderDwarf, { dt = dt })
 
-    scripts.systems.collision.debug_draw(dt)
+   -- scripts.systems.collision.debug_draw(dt)
 
     if DEBUGVALUE ~= nil then
         local r, g, b, a = love.graphics.getColor()
