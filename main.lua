@@ -1,3 +1,5 @@
+DEBUG = false
+
 GS = require "lib.gamestate"
 love.math.setRandomSeed(love.timer.getTime())
 love.math.random()
