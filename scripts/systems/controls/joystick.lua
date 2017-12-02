@@ -27,12 +27,12 @@ return function(entity, args)
     button.y = joystick:isDown(4)
 
     -- looking
-    if math.abs(leftx) > deadzone or math.abs(lefty) > deadzone then
+    if math.abs(rightx) > deadzone or math.abs(righty) > deadzone then
         entity.mousecontrol = false
-        if leftx > 0 then
-            pr = math.atan(lefty / leftx) + math.pi / 2
+        if rightx > 0 then
+            pr = math.atan(righty / rightx) + math.pi / 2
         else
-            pr = math.atan(lefty / leftx) - math.pi / 2
+            pr = math.atan(righty / rightx) - math.pi / 2
         end
     end
 
