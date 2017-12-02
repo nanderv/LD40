@@ -25,7 +25,7 @@ function ctx:enter()
         core.entity.add(scripts.entities.dwarf(-200 + math.random(1600), -200 + math.random(1600), 0))
     end
     core.entity.add(ent)
-    core.entity.add(BOARD)
+    core.entity.add(HOARD)
     core.entity.add(scripts.entities.dragonHead(ent))
     local h1 = core.newHandler("mouse", function(event) return event.type=="mouseclick" end, {type = "list"})
 
