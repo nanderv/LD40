@@ -10,8 +10,8 @@ function love.load()
     scripts.systems.collision.collision.functions.reset()
     core.system.add(scripts.systems.collision.collision)
     core.system.add(scripts.systems.map.map)
-    core.entity.add(scripts.entities.camera(0,0))
-    local ent = scripts.entities.dragon(600,600, 0)
+    core.entity.add(scripts.entities.camera(0, 0))
+    local ent = scripts.entities.dragon(600, 600, 0)
     core.entity.add(ent)
 
     -- Hoard
@@ -20,17 +20,16 @@ function love.load()
 
     rh.register()
 
-    core.entity.add(scripts.entities.wall(1,1))
-    core.entity.add(scripts.entities.wall(5,5))
+    core.entity.add(scripts.entities.wall(1, 1))
+    core.entity.add(scripts.entities.wall(5, 5))
     pprint(core.findHandler("test"))
-
 end
 
 local input = { text = "" }
 
 function love.update(dt)
     suit.layout:reset(550, 0)
-    suit.Input(input, suit.layout:row(200,30))
+    suit.Input(input, suit.layout:row(200, 30))
     if suit.Button("Give to son", suit.layout:row()).hit then
         scripts.systems.money.money.debug_button(0)
     end
@@ -40,17 +39,23 @@ function love.update(dt)
     if suit.Button("Next day", suit.layout:row()).hit then
         scripts.systems.money.money.debug_button(2)
     end
-    if suit.Button("End raid", suit.layout:row()).hit then
-        scripts.systems.money.money.debug_button(3)
+    if scripts.systems.money.money.get_money_ent().in_raid then
+        if suit.Button("End raid", suit.layout:row()).hit then
+            scripts.systems.money.money.debug_button(3)
+        end
+    else
+        if suit.Button("Begin raid", suit.layout:row()).hit then
+            scripts.systems.money.money.debug_button(3)
+        end
     end
     scripts.main.mainloop(dt, input.text)
 end
 
 function love.draw()
     love.graphics.push()
-    love.graphics.translate( scripts.systems.camera.toX(0), scripts.systems.camera.toY(0) )
+    love.graphics.translate(scripts.systems.camera.toX(0), scripts.systems.camera.toY(0))
     scripts.systems.collision.debug_draw(dt)
-    core.run("wiskers", scripts.systems.draw_wiskers, {dt=dt})
+    core.run("wiskers", scripts.systems.draw_wiskers, { dt = dt })
     love.graphics.pop()
     core.run("hoard", scripts.systems.money.money.show_money, {})
     suit.draw()
@@ -58,12 +63,13 @@ function love.draw()
     love.graphics.print(collectgarbage('count'), 50, 10)
 end
 
-function love.mousepressed( x, y, button )
-    core.runEvent({x = x, y = y, button = button, type = "mouseclick"})
+function love.mousepressed(x, y, button)
+    core.runEvent({ x = x, y = y, button = button, type = "mouseclick" })
 end
-function love.keypressed( key, scancode, isrepeat )
+
+function love.keypressed(key, scancode, isrepeat)
     suit.keypressed(key)
-    core.runEvent({key=key, scancode=scancode,isrepeat=isrepeat,type="key"})
+    core.runEvent({ key = key, scancode = scancode, isrepeat = isrepeat, type = "key" })
 end
 
 function love.textedited(text, start, length)
