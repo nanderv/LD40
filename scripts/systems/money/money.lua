@@ -126,15 +126,21 @@ money.debug_button = function(type)
 end
 
 money.show_money = function(ent)
-    love.graphics.print("Total in stash: " .. ent.money.total, 10, 30)
+    local quanta = (love.graphics.getWidth() - 20) / 3
+    local oldfont = love.graphics.getFont()
+    love.graphics.setNewFont(20)
+    love.graphics.printf("Total in stash: " .. ent.money.total, 10, 10, quanta, "center")
+    love.graphics.printf("Treasure in pocket: " .. ent.money.pocket_treasure, 10 + quanta, 10, quanta, "center")
+    love.graphics.printf("Target: " .. math.ceil(ent.money.lastgiven * 1.05), 10 + (2 * quanta), 10, quanta, "center")
+    love.graphics.setFont(oldfont)
+
     love.graphics.print("Last given: " .. ent.money.lastgiven, 10, 50)
     love.graphics.print("Total given: " .. ent.money.totalgiven, 10, 70)
     love.graphics.print("Last left over: " .. ent.money.lastleft, 10, 90)
-    love.graphics.print("Treasure in pcket: " .. ent.money.pocket_treasure, 10, 110)
     if ent.in_raid then
-        love.graphics.print("Raid: Yes", 10, 130)
+        love.graphics.print("Raid: Yes", 10, 110)
     else
-        love.graphics.print("Raid: No", 10, 130)
+        love.graphics.print("Raid: No", 10, 110)
     end
 end
 

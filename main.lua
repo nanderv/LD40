@@ -15,7 +15,7 @@ function love.load()
     core.entity.add(ent)
 
     -- Hoard
-    ent = { money = { total = 0, lastgiven = 950, totalgiven = 0, lastleft = 0, pocket_treasure = 0 }, son = { happy_this_turn = false }, current_turn_len = 0, current_second_progress = 0, in_raid = false, raid_level = 1 }
+    ent = { money = { total = 0, lastgiven = 952, totalgiven = 0, lastleft = 0, pocket_treasure = 0 }, son = { happy_this_turn = false }, current_turn_len = 0, current_second_progress = 0, in_raid = false, raid_level = 1 }
     core.entity.add(ent)
 
     rh.register()
@@ -28,26 +28,24 @@ end
 local input = { text = "" }
 
 function love.update(dt)
-    suit.layout:reset(550, 0)
-    suit.Input(input, suit.layout:row(200, 30))
-    if suit.Button("Give to son", suit.layout:row()).hit then
-        scripts.systems.money.money.debug_button(0)
-    end
-    if suit.Button("Open chest", suit.layout:row()).hit then
-        scripts.systems.money.money.debug_button(1)
-    end
-    if suit.Button("Next day", suit.layout:row()).hit then
-        scripts.systems.money.money.debug_button(2)
-    end
-    if scripts.systems.money.money.get_money_ent().in_raid then
-        if suit.Button("End raid", suit.layout:row()).hit then
-            scripts.systems.money.money.debug_button(3)
+    if not scripts.systems.money.money.get_money_ent().in_raid then
+
+        suit.layout:reset((love.graphics.getWidth() / 2) - 150, 200)
+        suit.layout:padding(5)
+        suit.layout:push(suit.layout:row(300, 30))
+        suit.Input(input, suit.layout:col(200, 30))
+        if suit.Button("Give to son", suit.layout:col(95, 30)).hit then
+            scripts.systems.money.money.debug_button(0)
         end
-    else
+        suit.layout:pop()
         if suit.Button("Begin raid", suit.layout:row()).hit then
             scripts.systems.money.money.debug_button(3)
         end
+        if suit.Button("Next day", suit.layout:row()).hit then
+            scripts.systems.money.money.debug_button(2)
+        end
     end
+
     scripts.main.mainloop(dt, input.text)
 end
 
@@ -59,8 +57,8 @@ function love.draw()
     love.graphics.pop()
     core.run("hoard", scripts.systems.money.money.show_money, {})
     suit.draw()
-    love.graphics.print(love.timer.getFPS(), 10, 10)
-    love.graphics.print(collectgarbage('count'), 50, 10)
+    love.graphics.print(love.timer.getFPS(), 10, 30)
+    love.graphics.print(collectgarbage('count'), 50, 30)
 end
 
 function love.mousepressed(x, y, button)
