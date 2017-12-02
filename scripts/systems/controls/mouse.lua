@@ -2,7 +2,7 @@ return function(entity, args)
     local dt = args.dt
     local mx, my = love.mouse.getX(), love.mouse.getY()
 
-    entity.position.rotation = core.get_rotation(entity.position,{ x = E.camera[1].position.x + mx, y = E.camera[1].position.y + my })
+    entity.position.rotation = core.get_rotation({ x = E.camera[1].position.x + mx, y = E.camera[1].position.y + my }, E.player[1].position)
     local old_rot = entity.position.rotation
     local p = E.player[1].position
     local dR = entity.position.rotation - p.rotation + math.pi
@@ -14,8 +14,7 @@ return function(entity, args)
     end
 
     for k, v in ipairs(E.dragonNeck) do
-
-        v.position.rotation = p.rotation + dR / 2
+        v.position.rotation = p.rotation + (dR -math.pi) /3 * v.segment
     end
 
     if love.mouse.isDown(1) then
