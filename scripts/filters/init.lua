@@ -11,6 +11,7 @@ a("player", { "player" })
 a("clickable", { "collision" , "clickable"})
 a("mouseplayer", { "dragonHead" })
 a("dragonHead", { "dragonHead" })
+a("dragonNeck", { "dragonNeck" })
 
 a("mapPosition", { "mapPosition" })
 a("camera", { "camera", "position" })

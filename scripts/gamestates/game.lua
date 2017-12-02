@@ -23,13 +23,19 @@ function ctx:enter()
 
     core.entity.add(scripts.entities.camera(0,0))
     local ent = scripts.entities.dragon(0.5*32*16,32*20.5*16, 0)
+    local neck = scripts.entities.dragonNeck(true, ent)
+    core.entity.add(neck)
+    neck = scripts.entities.dragonNeck(false, ent)
+    core.entity.add(neck)
+    local head = scripts.entities.dragonHead(neck)
+    core.entity.add(head)
+
     E.currentframe = 0
     for i = 1, 1000 do
      --   core.entity.add(scripts.entities.dwarf(-200 + math.random(1600), -200 + math.random(1600), 0))
     end
     core.entity.add(ent)
     core.entity.add(HOARD)
-    core.entity.add(scripts.entities.dragonHead(ent))
     local h1 = core.newHandler("mouse", function(event) return event.type=="mouseclick" end, {type = "list"})
 
     -- Hoard
@@ -59,7 +65,7 @@ function ctx:draw()
     core.run("player", scripts.systems.rendering.renderDragon, { dt = dt })
     core.run("dwarf", scripts.systems.rendering.renderDwarf, { dt = dt })
 
-   -- scripts.systems.collision.debug_draw(dt)
+ scripts.systems.collision.debug_draw(dt)
 
     if DEBUGVALUE ~= nil then
         local r, g, b, a = love.graphics.getColor()

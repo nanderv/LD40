@@ -11,8 +11,8 @@ s.functions.update = function(dt)
 
         v.position.x = v.position.x + p.x - po.x
         v.position.y = v.position.y + p.y - po.y
-        v.position.rotation = v.position.rotation + v.relativeto.position.rotation - prevposses[v].rotation
-        v.position.rotation = v.position.rotation + dt
+
+        v.position.rotation = v.position.rotation + (v.relativeto.position.rotation - prevposses[v].rotation)
         prevposses[v] = { x = v.relativeto.position.x, y = v.relativeto.position.y, rotation = v.relativeto.position.rotation }
     end
 end
