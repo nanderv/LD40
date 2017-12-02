@@ -24,9 +24,9 @@ function ctx:enter()
     core.entity.add(scripts.entities.camera(0, 0))
     local ent = scripts.entities.dragon(0.5 * 32 * 16, 32 * 20.5 * 16, 0)
     E.currentframe = 0
-    local spread = 200
-    for i = 1, 1 do
-        core.entity.add(scripts.entities.dwarf(0.5*32*16-spread + math.random(spread*2), 32*20.5*16-spread + math.random(spread*2), 0))
+    local spread = 1000
+    for i = 1, 100 do
+        core.entity.add(scripts.entities.dwarf(0.5 * 32 * 16 - spread + math.random(spread * 2), 32 * 20.5 * 16 - spread + math.random(spread * 2), 0))
     end
     core.entity.add(ent)
     core.entity.add(HOARD)
@@ -62,6 +62,7 @@ function ctx:draw()
 
     core.run("dwarf", scripts.systems.rendering.renderDwarf, { dt = dt })
     core.run("player", scripts.systems.rendering.renderDragon, { dt = dt })
+    --    scripts.systems.collision.debug_draw(dt)
     if DEBUGVALUE ~= nil then
         local r, g, b, a = love.graphics.getColor()
         love.graphics.setColor(255, 0, 0)
@@ -85,5 +86,4 @@ function ctx:leave()
     love.mouse.setGrabbed(false)
     print('leaving')
 end
-
 return ctx

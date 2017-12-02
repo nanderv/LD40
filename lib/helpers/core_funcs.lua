@@ -136,3 +136,14 @@ core.rotate_point = function(p, angle)
     -- translate point back:
     return { x = xnew, y = ynew }
 end
+
+core.get_rotation = function(from, to)
+    local dx, dy = to.x - from.x, to.y - from.y
+    local aim_for = 0
+    if dx > 0 then
+        aim_for = -math.acos(dy / math.sqrt(dx * dx + dy * dy))
+    else
+        aim_for = math.acos(dy / math.sqrt(dx * dx + dy * dy))
+    end
+    return aim_for
+end
