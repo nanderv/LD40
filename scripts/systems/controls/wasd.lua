@@ -19,5 +19,5 @@ return function(entity, args)
         entity.position.x = entity.position.x - math.sin(entity.position.rotation)* 180 * dt
         entity.position.y = entity.position.y + math.cos(entity.position.rotation)* 180 * dt
     end
-    return true, false
+    return false, false
 end

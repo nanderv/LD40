@@ -6,4 +6,5 @@ return function(dt)
     core.run("mouseplayer", scripts.systems.controls.mouse, { dt = dt })
     scripts.systems.collision.collision.functions.update(dt)
     scripts.systems.camera.update(dt)
+    scripts.systems.helpers.relative_position.functions.update(dt)
 end

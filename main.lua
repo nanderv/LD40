@@ -8,10 +8,12 @@ function love.load()
     scripts.systems.collision.collision.functions.reset()
     core.system.add(scripts.systems.collision.collision)
     core.system.add(scripts.systems.map.map)
+    core.system.add(scripts.systems.helpers.relative_position)
+
     core.entity.add(scripts.entities.camera(0,0))
     local ent = scripts.entities.dragon(600,600, 0)
     core.entity.add(ent)
-
+    core.entity.add(scripts.entities.test(200,0,ent))
     local h1 = core.newHandler("mouse", function(event) return event.type=="mouseclick" end, {type = "list"})
 
     local co =  scripts.handlers.clickOn
