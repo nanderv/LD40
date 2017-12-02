@@ -6,6 +6,9 @@ require 'lib.ECFS'
 require 'lib.load_all_scripts'
 rh = require 'scripts.handlers.registerHandlers'
 suit = require 'lib.suit'
+
+BOARD = { money = { total = 0, lastgiven = 952, totalgiven = 0, lastleft = 0, pocket_treasure = 0 }, son = { happy_this_turn = false }, current_turn_len = 0, current_second_progress = 0, in_raid = true, raid_level = 1 }
+
 function love.load()
     GS.registerEvents()
     GS.switch(scripts.gamestates.game)
