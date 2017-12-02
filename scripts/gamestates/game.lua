@@ -46,7 +46,7 @@ function ctx:update(dt)
     E.currentframe = E.currentframe + 1
     scripts.main.mainloop(dt)
     suit.layout:reset((love.graphics.getWidth() / 3) * 2, 33)
-    suit.Slider({ value = E.hoard[1].current_turn_len, min = 0, max = 120 }, { id = 'Day progress', valign = "bottom" }, suit.layout:row(love.graphics.getWidth() / 3, 15))
+    suit.Slider({ value = E.hoard[1].current_turn_len, min = 0, max = 120 }, { id = 'Day progress', valign = "bottom", notMouseEditable = true }, suit.layout:row(love.graphics.getWidth() / 3, 15))
     suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Chatbox", font = love.graphics.getFont(), valign = "top" }, -10, -10, love.graphics.getWidth() + 10, 55)
 end
 
