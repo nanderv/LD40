@@ -14,9 +14,6 @@ function love.load()
     local ent = scripts.entities.dragon(600,600, 0)
     core.entity.add(ent)
 
-    ent = { collision = nil, position = { x = 250, y = 250, rotation = 0 }, wiskers = { { x = 100, y = 100 }, { x = -100, y = 100 } } }
-    core.entity.add(ent)
-
     -- Hoard
     ent = { money = { total = 0, lastgiven = 950, totalgiven = 0, lastleft = 0, pocket_treasure = 0 }, son = { happy_this_turn = false }, current_turn_len = 0, current_second_progress = 0, in_raid = false, raid_level = 1 }
     core.entity.add(ent)
