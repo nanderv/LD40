@@ -15,7 +15,7 @@ return function(core, info, ...)
 
 	opt.state = core:registerHitbox(opt.id, x,y,w,h)
 
-	if not opt.notMouseEditable and core:isActive(opt.id) then
+	if core:isActive(opt.id) then
 		-- mouse update
 		local mx,my = core:getMousePosition()
 		if opt.vertical then
