@@ -7,6 +7,8 @@ return function(dt, txt)
     core.run("dwarf", scripts.systems.dwarfs.attack_dragon, { dt = dt })
     scripts.systems.collision.collision.functions.update(dt)
     scripts.systems.camera.update(dt)
+    scripts.systems.helpers.relative_position.functions.update(dt)
 
     core.run("hoard", scripts.systems.money.money.update, { dt = dt, txt = txt })
+
 end

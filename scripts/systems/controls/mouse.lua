@@ -6,9 +6,9 @@ return function(entity, args)
     local dx, dy = mx - px, my - py
 
     if mx > px then
-        entity.position.rotation = math.atan(dy / dx) + math.pi/2
-    else
         entity.position.rotation = math.atan(dy / dx) - math.pi/2
+    else
+        entity.position.rotation = math.atan(dy / dx) + math.pi/2
     end
 
     if love.mouse.isDown(1) then
