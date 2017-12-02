@@ -58,7 +58,7 @@ function ctx:draw()
     love.graphics.setColor(255, 255, 255)
     love.graphics.push()
     love.graphics.translate(scripts.systems.camera.toX(0), scripts.systems.camera.toY(0))
-    scripts.systems.collision.debug_draw(dt)
+--    scripts.systems.collision.debug_draw(dt)
 
     core.run("dwarf", scripts.systems.rendering.renderDwarf, { dt = dt })
     core.run("player", scripts.systems.rendering.renderDragon, { dt = dt })
