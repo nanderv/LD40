@@ -33,6 +33,8 @@ money.update = function(entity, args)
 end
 
 money.give_to_son = function(amount)
+    if not amount then return end
+
     local ent = get_money_ent()
     print(amount .. ":" .. ent.money.total)
     if amount < ent.money.lastgiven * 1.05 or amount > ent.money.total then
