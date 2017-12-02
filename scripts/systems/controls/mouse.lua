@@ -5,7 +5,12 @@ return function(entity, args)
     local px, py = entity.position.x, entity.position.y
 
     local dx, dy = mx - px, my - py
-    entity.position.rotation = math.atan(dy / dx)
+
+    if mx > px then
+        entity.position.rotation = math.atan(dy / dx) + math.pi/2
+    else
+        entity.position.rotation = math.atan(dy / dx) - math.pi/2
+    end
 
     if love.mouse.isDown(1) then
         -- FIRE
