@@ -44,6 +44,7 @@ end
 function ctx:update(dt)
     E.currentframe = E.currentframe + 1
     scripts.main.mainloop(dt, input.text)
+    suit._instance:registerDraw(suit._instance.theme.Button, "", {id="Chatbox", font=love.graphics.getFont()}, -10, -10, love.graphics.getWidth() + 10, 55)
 end
 
 
@@ -66,9 +67,9 @@ function ctx:draw()
         love.graphics.setColor(r, g, b, a)
     end
     love.graphics.pop()
+    suit.draw()
     core.run("hoard", scripts.systems.money.money.show_money, {})
 
-    suit.draw()
     love.graphics.print(love.timer.getFPS(), 10, 30)
     love.graphics.print(collectgarbage('count'), 50, 30)
 end
