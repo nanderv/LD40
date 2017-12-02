@@ -7,6 +7,8 @@ function love.load()
     require 'scripts'
     scripts.systems.collision.collision.functions.reset()
     core.system.add(scripts.systems.collision.collision)
+    core.system.add(scripts.systems.map.map)
+
     local ent = { LW = {}, collision = { dynamic = true, box = true, type = "test", polygon = { { x = -50, y = -50 }, { x = 50, y = -50 }, { x = 50, y = 500 }, { x = -50, y = 500 } } }, position = { x = 630, y = 290, rotation = 0 } }
     core.entity.add(ent)
     local ent = scripts.entities.dragon(100,100, 0)
@@ -17,7 +19,7 @@ function love.load()
     local h1 = core.newHandler("mouse", function(event) return event.type=="mouseclick" end, {type = "list"})
 
     local co =  scripts.handlers.clickOn
-    local handler = core.newHandler("test",co.clickArea(100,100,400,400), co.print(co.findAllClickableObjects("clickable")))
+    local handler = core.newHandler("test", co.clickArea(100,100,400,400), co.print(co.findAllClickableObjects("clickable")))
     h1.run[1] = handler
     core.addHandler(h1)
      h1 = core.newHandler("keys", function(event) return event.type=="key" end, {type = "list"})
@@ -25,7 +27,9 @@ function love.load()
     handler = core.newHandler("RELOAD", function(event) return event.key=="f9" end, RELOADALL)
     core.addHandler(h1)
     h1.run[1] = handler
-
+    core.entity.add(scripts.entities.wall(1,1))
+    core.entity.add(scripts.entities.wall(5,5))
+    pprint(scripts.systems.map.map.pathFind({x=0,y=0}, {x=10,y=10}))
     pprint(core.findHandler("test"))
 
 end
