@@ -28,7 +28,7 @@ money.update = function(entity, args)
     --    end
     if ent.current_second_progress >= daylen then
         ent.current_second_progress = 0
-        print(money.second())
+        money.second()
     end
 end
 
@@ -94,43 +94,33 @@ money.next_turn = function()
     return true
 end
 
-money.debug_button_press = function(func)
-    return function(event)
-        local ent = get_money_ent()
-        pprint(ent.money)
+money.debug_button = function(type)
+    local ent = get_money_ent()
+    pprint(ent.money)
 
-        local objs = func(event)
-        if #objs < 1 then
-            print("No click")
-            return
+    if type == 0 then
+        if money.give_to_son(tonumber(txt)) then
+            print("Gave " .. txt .. " coins to son")
+        else
+            print("Failed to give " .. txt .. " coins to son")
         end
-
-        local name = objs[1].name
-
-        if name == "Give to son" then
-            if money.give_to_son(tonumber(txt)) then
-                print("Gave " .. txt .. " coins to son")
-            else
-                print("Failed to give " .. txt .. " coins to son")
-            end
-        elseif name == "Open chest" then
-            money.open_chest()
-            print("Got money from chest!")
-        elseif name == "Next day" then
-            money.next_turn()
-            print("Advanced the day")
-        elseif name == "End raid" then
-            if ent.in_raid then
-                money.end_raid()
-                print("Ended raid")
-            else
-                money.start_raid()
-                print("Started raid")
-            end
+    elseif type == 1 then
+        money.open_chest()
+        print("Got money from chest!")
+    elseif type == 2 then
+        money.next_turn()
+        print("Advanced the day")
+    elseif type == 3 then
+        if ent.in_raid then
+            money.end_raid()
+            print("Ended raid")
+        else
+            money.start_raid()
+            print("Started raid")
         end
-
-        pprint(ent.money)
     end
+
+    pprint(ent.money)
 end
 
 money.show_money = function(ent)
