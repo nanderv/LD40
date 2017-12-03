@@ -33,7 +33,7 @@ function ctx:enter()
 
     CURRENTFRAME = 0
     local spread = 1000
-    for i = 1, 1 do
+    for i = 1, 1000 do
         core.entity.add(scripts.entities.dwarf(0.5 * 32 * 16 - spread + math.random(spread * 2), 32 * 20.5 * 16 - spread + math.random(spread * 2), 0))
     end
     core.entity.add(ent)

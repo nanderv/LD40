@@ -16,7 +16,7 @@ love.math.random()
 love.math.random()
 love.math.random()
 love.math.random()
-
+DEBUG=true
 
 pprint = require 'lib.pprint'
 require 'lib.helpers.core_funcs'
