@@ -51,7 +51,7 @@ local function checkCollision(entity1)
     end
     -- Use bump to check if entities are near enough. It uses either a circle around it or a box around it. The circle is rotation-safe, the box isn't.
     local _, _, cols, len = WORLD:move(entity1, entity1.position.x - shape1, entity1.position.y - shape1, function() return "cross" end)
-
+    local dwarfBurnt = 0
     for _, b in ipairs(cols) do
         local entity2 = b.other
         if entity1 ~= entity2 then
@@ -62,13 +62,15 @@ local function checkCollision(entity1)
 
                 -- Check if the collision is necessary. I think this is slightly slower than the previous check, so that's why this one is later. Not tested for speed.
                 local collided = false
-                if entity2.collision.type == "dwarf" and entity1.collision.type == "fire" then
+                if entity2.collision.type == "dwarf" and entity1.collision.type == "fire" and dwarfBurnt < 2 then
+
                     local p1 = rpo[entity1]
                     if not p1 then
                         p1 = lib.rotate_poly(entity1)
                         rpo[entity1] = p1
                     end
                     collided = lib.point_in_polygon(p1, {x=0,y=0}, entity1.position, entity2.position)
+                    if collided then dwarfBurnt = dwarfBurnt + 1 end
                 elseif lib.check_rule(entity1, entity2) then
                     local p1 = rpo[entity1]
                     if not p1 then

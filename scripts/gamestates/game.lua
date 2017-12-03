@@ -22,7 +22,7 @@ function ctx:enter()
     core.system.add(scripts.systems.helpers.relative_position)
 
     core.entity.add(scripts.entities.camera(0,0))
-    local ent = scripts.entities.dragon(0.5*32*16,32*20.5*16, 0)
+    local ent = scripts.entities.dragon(0.5*32*20,32*20.5*20, 0)
     local neck = scripts.entities.dragonNeck(true, ent,1)
     core.entity.add(neck)
     neck = scripts.entities.dragonNeck(false, neck, 2)

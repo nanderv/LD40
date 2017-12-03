@@ -50,7 +50,7 @@ end
 
 function areas.update(_)
     local p =core.filter.get("player")
-    local x, y = math.floor(p.position.x / (32 * 32)), math.floor(p.position.y / (32 * 32))
+    local x, y = math.floor(p.position.x / (32 * 20)), math.floor(p.position.y / (32 * 20))
 
 
     neigh = { { x = x + 1, y = y }, { x = x - 1, y = y }, { x = x, y = y + 1 }, { x = x, y = y - 1 } }
