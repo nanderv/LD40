@@ -1,4 +1,4 @@
-local daylen = 120 -- seconds
+local daylen = 10 -- seconds
 
 local money = {}
 
@@ -21,10 +21,14 @@ money.update = function(entity, args)
     ent.current_second_progress = ent.current_second_progress + args.dt
 
     if ent.current_turn_len >= daylen then
-        HOARD.current_turn_len = 0
-        ent.current_turn_len = 0
-        scripts.systems.money.money.end_raid(false)
-        DOSWITCH = true
+        if ent.money.total + ent.money.pocket_treasure >= ent.money.lastgiven * 1.05 then
+            HOARD.current_turn_len = 0
+            ent.current_turn_len = 0
+            scripts.systems.money.money.end_raid(false)
+            DOSWITCH = true
+        else
+            money.next_turn()
+        end
     end
 
     if ent.current_second_progress >= 1 then
@@ -106,6 +110,7 @@ money.next_turn = function()
     if not ent then return end
 
     if not ent.son.happy_this_turn then
+        GS.switch(scripts.gamestates.gameover)
         return false
     end
 
