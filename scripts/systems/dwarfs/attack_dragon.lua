@@ -16,12 +16,7 @@ return function(entity, args)
     local x1, y1 = pol[1].x, pol[1].y
     local x2, y2 = pol[3].x, pol[3].y
 
-    if DEBUG then
-        DEBUGVALUE = DEBUGVALUE or {}
-        DEBUGVALUE[entity.offset] = { pp.x + x1 + ((x2 - x1) * entity.offset), pp.y + y1 + ((y2 - y1) * entity.offset), ep.x, ep.y }
-        local mx, my = love.mouse.getX(), love.mouse.getY()
-        DEBUGVALUE[1] = { E.camera[1].position.x + mx, E.camera[1].position.y + my, entity.position.x, entity.position.y }
-    end
+
 
     -- get the delta from entity to player
     local dx, dy = (pp.x + x1 + ((x2 - x1) * entity.offset)) - ep.x, (pp.y + y1 + ((y2 - y1) * entity.offset)) - ep.y
