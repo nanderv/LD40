@@ -10,12 +10,13 @@ local ctx = GS.new()
 local input = { text = "" }
 
 function ctx:enter()
+    print("Entered " .. self.name)
+    core.entity.push()
 
     require 'scripts'
     scripts.systems.map.areas.genAll()
 
     scripts.systems.map.areas.genArea(0, 0, true)
-    GS.push(scripts.gamestates.overworld)
     scripts.systems.collision.collision.functions.reset()
     core.system.add(scripts.systems.collision.collision)
     core.system.add(scripts.systems.map.map)
@@ -29,19 +30,14 @@ function ctx:enter()
     core.entity.add(neck)
     local head = scripts.entities.dragonHead(neck)
     core.entity.add(head)
-
+    core.entity.add(scripts.entities.dwarf_spawner(0.5 * 32 * 16-500, 32 * 20.5 * 16, 0, 0.25))
     CURRENTFRAME = 0
     local spread = 1000
-    for i = 1, 1000 do
-        core.entity.add(scripts.entities.dwarf(0.5 * 32 * 16 - spread + math.random(spread * 2), 32 * 20.5 * 16 - spread + math.random(spread * 2), 0))
-    end
+--    for i = 1, 1000 do
+--        core.entity.add(scripts.entities.dwarf(0.5 * 32 * 16 - spread + math.random(spread * 2), 32 * 20.5 * 16 - spread + math.random(spread * 2), 0))
+--    end
     core.entity.add(ent)
-    core.entity.add(HOARD)
     local h1 = core.newHandler("mouse", function(event) return event.type=="mouseclick" end, {type = "list"})
-
-    -- Hoard
-    ent = { money = { total = 0, lastgiven = 952, totalgiven = 0, lastleft = 0, pocket_treasure = 0 }, son = { happy_this_turn = false }, current_turn_len = 0, current_second_progress = 0, in_raid = false, raid_level = 1 }
-    core.entity.add(ent)
 
     rh.register()
 end
@@ -51,22 +47,28 @@ end
 function ctx:update(dt)
     CURRENTFRAME = CURRENTFRAME + 1
     scripts.main.mainloop(dt)
+
+    local resource = love.graphics.newImage("assets/images/sprites/dwarf/dwarf0.png")
+    ctx.dwarf_sprite_batch = love.graphics.newSpriteBatch(resource, 10000, "dynamic")
+    core.run("dwarf", scripts.systems.dwarfs.sprite_batch_fill, { sb = ctx.dwarf_sprite_batch, image = resource })
+    ctx.dwarf_sprite_batch:flush()
     suit.layout:reset((love.graphics.getWidth() / 3) * 2, 33)
-    suit.Slider({ value = core.filter.get("hoard").current_turn_len, min = 0, max = 120 }, { id = 'Day progress', valign = "bottom", notMouseEditable = true }, suit.layout:row(love.graphics.getWidth() / 3, 15))
-    suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Chatbox", font = love.graphics.getFont(), valign = "top" }, -10, -10, love.graphics.getWidth() + 10, 55)
+    suit.Slider({ value = core.filter.get("hoard").current_turn_len, min = 0, max = 120 }, { id = 'Day progress', valign = "top", notMouseEditable = true }, suit.layout:row(love.graphics.getWidth() / 3, 15))
+    suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Hotbar", font = love.graphics.getFont(), valign = "bottom" }, -10, -10, love.graphics.getWidth() + 10, 55)
 end
 
 
 function ctx:draw()
-
     love.graphics.setColor(0, 0, 255)
     love.graphics.rectangle("fill", 0, 0, 10000, 10000)
     love.graphics.setColor(255, 255, 255)
     love.graphics.push()
     love.graphics.translate(scripts.systems.camera.toX(0), scripts.systems.camera.toY(0))
-   scripts.systems.collision.debug_draw(dt)
+    scripts.systems.collision.debug_draw(dt)
+    -- core.run("dwarf", scripts.systems.rendering.renderDwarf, { dt = dt })
 
-    core.run("dwarf", scripts.systems.rendering.renderDwarf, { dt = dt })
+    love.graphics.draw(ctx.dwarf_sprite_batch, 0, 0)
+
     core.run("player", scripts.systems.rendering.renderDragon, { dt = dt })
     --    scripts.systems.collision.debug_draw(dt)
     if DEBUGVALUE ~= nil then
@@ -83,14 +85,18 @@ function ctx:draw()
 
     if DEBUG then
         love.graphics.print(love.timer.getFPS(), 10, 30)
-        love.graphics.print(collectgarbage('count'), 50, 30)
+        love.graphics.print(collectgarbage('count') / 1024, 50, 30)
     end
 end
 
 
 function ctx:leave()
     love.mouse.setGrabbed(false)
-    print('leaving')
+    core.entity.pop()
+
+    print('Leaving ' .. self.name)
 end
+
+ctx.name = "GAME"
 
 return ctx

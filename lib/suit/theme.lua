@@ -14,7 +14,7 @@ theme.color = {
 
 -- HELPER
 function theme.getColorForState(opt)
-	local s = opt.state or "normal"
+	local s = not opt.notMouseEditable and opt.state or "normal"
 	return (opt.color and opt.color[opt.state]) or theme.color[s]
 end
 
@@ -95,7 +95,7 @@ function theme.Slider(fraction, opt, x,y,w,h)
 	theme.drawBox(x,y,w,h, c, opt.cornerRadius)
 	theme.drawBox(xb,yb,wb,hb, {bg=c.fg}, opt.cornerRadius)
 
-	if opt.state ~= nil and opt.state ~= "normal" then
+	if not opt.notMouseEditable and opt.state ~= nil and opt.state ~= "normal" then
 		love.graphics.setColor((opt.color and opt.color.active or {}).fg or theme.color.active.fg)
 		if opt.vertical then
 			love.graphics.circle('fill', x+wb/2, yb, r)
