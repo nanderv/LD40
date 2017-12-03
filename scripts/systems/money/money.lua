@@ -80,11 +80,17 @@ money.start_raid = function()
     ent.in_raid = true
 end
 
-money.end_raid = function(dead)
+money.end_raid = function(alive)
     local ent = money.get_money_ent()
     if not ent then return end
+    if not ent.in_raid then return end
 
-    ent.money.total, ent.money.pocket_treasure = ent.money.pocket_treasure, 0
+    if alive then
+        ent.money.total, ent.money.pocket_treasure = ent.money.total + ent.money.pocket_treasure, 0
+    else
+        ent.money.pocket_treasure = 0
+    end
+
     ent.in_raid = false
     ent.raid_leve = ent.raid_level + 1
 end

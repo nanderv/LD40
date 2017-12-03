@@ -6,7 +6,7 @@ function ctx:enter(from)
     print("Entered " .. self.name)
 
     ctx.from = from
-    scripts.systems.money.money.end_raid()
+    scripts.systems.money.money.end_raid(true)
 end
 
 function ctx:update(dt)
