@@ -38,15 +38,6 @@ end
 
 core.filter.update = function(entity)
     -- Add the entity to the ID-lists
---    while (id_to_entity[id_counter]) do
---        id_counter = id_counter + 10000
---    end
---
---    if not F[entity] then
---        id_to_entity[id_counter] = entity
---        entity_to_id[entity] = id_counter
---        id_counter = id_counter + 1
---    end
     local R = core.filter.rules
     for _, name_rules in pairs(R) do
         local name, rule = name_rules[1], name_rules[2]
@@ -110,9 +101,11 @@ core.filter.update = function(entity)
         if not all and F[name][entity] then
             -- entity was part of filter, but now not anymore
             local ind = F[name][entity]
-            E[name][ind] = E[name][#E[name]]
+            local mv = E[name][#E[name]]
+            E[name][ind] = mv
             E[name][#E[name]] = nil
             F[name][entity] = nil
+            F[name][mv] = ind
             -- TODO: Run unregister functions
             if core.system.unregisters[name] then
                 for _, v in pairs(core.system.unregisters[name]) do

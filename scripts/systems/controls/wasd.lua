@@ -23,9 +23,9 @@ return function(entity, args)
             end
             if math.abs(a_rot) > 0.1 then
                 if a_rot > math.pi then
-                    entity.position.rotation = entity.position.rotation  + dt
+                    entity.position.rotation = entity.position.rotation  + dt*1.4
                 else
-                    entity.position.rotation = entity.position.rotation  -dt
+                    entity.position.rotation = entity.position.rotation  -dt*1.4
                 end
             end
         end

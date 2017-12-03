@@ -46,24 +46,8 @@ function core.entity.remove(entity, idx, sf)
     end
 
     local R = core.filter.rules
-    local id = entity_to_id[entity]
-    if id == nil then return end
-    entity_to_id[entity] = nil
-    id_to_entity[id] = nil
-
-    for _, name_rules in pairs(R) do
-        local name = name_rules[1]
-        local ind = F[name][entity]
-
-        if ind then
-            E[name][ind] = E[name][#E[name]]
-            E[name][#E[name]] = nil
-            F[name][entity] = nil
-            if unregisters[name] then
-                for _, v in pairs(unregisters[name]) do
-                    v.unregisters[name](entity)
-                end
-            end
-        end
+    for k, _ in pairs(entity) do
+        entity[k] = nil
     end
+    core.filter.update(entity)
 end
