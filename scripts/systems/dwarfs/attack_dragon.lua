@@ -1,5 +1,5 @@
 return function(entity, args)
-    -- if entity.updateframe ~= E.currentframe % 5 then
+    -- if entity.updateframe ~= CURRENTFRAME % 5 then
     --     return
     -- end
 
@@ -7,10 +7,10 @@ return function(entity, args)
     local speed = 0.08
     local rotatespeed = 0.5
 
-    local pp, ep = E.player[1].position, entity.position
+    local pp, ep =core.filter.get("player").position, entity.position
 
     -- rotate player poligon
-    local pol = scripts.systems.collision.lib.rotate_poly(E.player[1])
+    local pol = scripts.systems.collision.lib.rotate_poly(core.filter.get("player"))
 
     -- get the line that goes down through the middle
     local x1, y1 = pol[1].x, pol[1].y

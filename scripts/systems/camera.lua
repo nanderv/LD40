@@ -8,11 +8,12 @@
 local s = {}
 
 s.update = function()
-    local player = E.player[1]
+    local player = core.filter.get("player")
+
     if player == nil then
         return
     end
-    local camera = E.camera[1]
+    local camera = core.filter.get("camera")
     if not camera then return end
     local width = love.graphics.getWidth( )
     local height = love.graphics.getHeight( )
@@ -38,11 +39,11 @@ s.update = function()
 
 end
 function s.toX(x)
-    local camera = E.camera[1] or {x=0,y=0 }
+    local camera = core.filter.get("camera") or {x=0,y=0 }
     return x - camera.position.x
 end
 function s.toY(y)
-    local camera = E.camera[1] or {x=0,y=0 }
+    local camera = core.filter.get("camera") or {x=0,y=0 }
     return y - camera.position.y
 end
 return s

@@ -30,7 +30,7 @@ function ctx:enter()
     local head = scripts.entities.dragonHead(neck)
     core.entity.add(head)
 
-    E.currentframe = 0
+    CURRENTFRAME = 0
     local spread = 1000
     for i = 1, 100 do
         core.entity.add(scripts.entities.dwarf(0.5 * 32 * 16 - spread + math.random(spread * 2), 32 * 20.5 * 16 - spread + math.random(spread * 2), 0))
@@ -49,10 +49,10 @@ end
 
 
 function ctx:update(dt)
-    E.currentframe = E.currentframe + 1
+    CURRENTFRAME = CURRENTFRAME + 1
     scripts.main.mainloop(dt)
     suit.layout:reset((love.graphics.getWidth() / 3) * 2, 33)
-    suit.Slider({ value = E.hoard[1].current_turn_len, min = 0, max = 120 }, { id = 'Day progress', valign = "bottom", notMouseEditable = true }, suit.layout:row(love.graphics.getWidth() / 3, 15))
+    suit.Slider({ value = core.filter.get("hoard").current_turn_len, min = 0, max = 120 }, { id = 'Day progress', valign = "bottom", notMouseEditable = true }, suit.layout:row(love.graphics.getWidth() / 3, 15))
     suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Chatbox", font = love.graphics.getFont(), valign = "top" }, -10, -10, love.graphics.getWidth() + 10, 55)
 end
 

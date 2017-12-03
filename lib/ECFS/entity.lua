@@ -8,8 +8,19 @@ core.entity.add = core.filter.update
 
 function core.entity.remove(entity)
     local R = core.filter.rules
-    for k, _ in pairs(entity) do
-        entity[k] = nil
+
+    for _, name_rules in pairs(R) do
+        local name = name_rules[1]
+        local ind = F[name][entity]
+
+        if ind then
+            F[name][entity] = nil
+
+            if unregisters[name] then
+                for _, v in pairs(unregisters[name]) do
+                    v.unregisters[name](entity)
+                end
+            end
+        end
     end
-    core.filter.update(entity)
 end
