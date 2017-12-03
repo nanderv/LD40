@@ -30,7 +30,7 @@ function ctx:enter()
     core.entity.add(neck)
     local head = scripts.entities.dragonHead(neck)
     core.entity.add(head)
-    core.entity.add(scripts.entities.dwarf_spawner(0.5 * 32 * 16-500, 32 * 20.5 * 16, 0, 0.25))
+    core.entity.add(scripts.entities.dwarf_spawner(0.5 * 32 * 20-500, 32 * 20.5 * 20, 0, 0.25))
     CURRENTFRAME = 0
     local spread = 1000
 --    for i = 1, 1000 do
