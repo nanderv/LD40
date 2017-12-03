@@ -1,4 +1,4 @@
-local daylen = 10 -- seconds
+local daylen = 120 -- seconds
 
 local money = {}
 
