@@ -4,6 +4,6 @@ return function(entity, args)
         entity.counter = entity.counter - entity.spawnrate
         core.entity.add(scripts.entities.dwarf(entity.position.x, entity.position.y, entity.position.rotation))
         entity.spawns = entity.spawns + 1
-        print("Spawned " .. entity.spawns)
+--        print("Spawned " .. entity.spawns)
     end
 end
