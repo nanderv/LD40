@@ -55,28 +55,38 @@ local function checkCollision(entity1)
     for _, b in ipairs(cols) do
         local entity2 = b.other
         if entity1 ~= entity2 then
-            if entity1.player and entity2.collision.type=="wall"  then
+            if entity1.player and entity2.collision.type == "wall" then
                 s.prev[entity1].rotation = entity1.position.rotation
                 entity1.position = s.prev[entity1]
-            end
-            -- Check if the collision is necessary. I think this is slightly slower than the previous check, so that's why this one is later. Not tested for speed.
-            if lib.check_rule(entity1, entity2) then
-                local p1 = rpo[entity1]
-                if not p1 then
-                    p1 = lib.rotate_poly(entity1)
-                    rpo[entity1] = p1
-                end
-                local p2 = rpo[entity2]
-                if not p2 then
-                    p2 = lib.rotate_poly(entity2)
-                    rpo[entity2] = p2
-                end
+            else
 
-                -- polygon collision
-                local collided = lib.polygon_in_polygon(p1, p2, entity1.position, entity2.position)
+                -- Check if the collision is necessary. I think this is slightly slower than the previous check, so that's why this one is later. Not tested for speed.
+                local collided = false
+                if entity2.collision.type == "dwarf" and entity1.collision.type == "fire" then
+                    local p1 = rpo[entity1]
+                    if not p1 then
+                        p1 = lib.rotate_poly(entity1)
+                        rpo[entity1] = p1
+                    end
+                    collided = lib.point_in_polygon(p1, {x=0,y=0}, entity1.position, entity2.position)
+                elseif lib.check_rule(entity1, entity2) then
+                    local p1 = rpo[entity1]
+                    if not p1 then
+                        p1 = lib.rotate_poly(entity1)
+                        rpo[entity1] = p1
+                    end
+                    local p2 = rpo[entity2]
+                    if not p2 then
+                        p2 = lib.rotate_poly(entity2)
+                        rpo[entity2] = p2
+                    end
 
-                -- Actual logic
+                    -- polygon collision
+                    collided = lib.polygon_in_polygon(p1, p2, entity1.position, entity2.position)
+                    -- Actual logic
+                end
                 if collided then
+
                     lib.execute_if_rule(entity1, entity2, s.prev[entity1])
                 end
             end
@@ -88,11 +98,20 @@ end
 
 s.functions.update = function(dt)
     rpo = {}
-    for k, v in ipairs(E.dynamic_collision) do
+    for k, v in pairs(F.dynamic_collision) do
 
         checkCollision(v)
     end
-    for k, v in ipairs(E.static_collision) do
+    for k, v in pairs(F.moving_collision) do
+        local shape1
+        if s.circles[v] then
+            shape1 = s.circles[v]
+        else
+            shape1 = -s.boxes[v].minx
+        end
+        WORLD:update(v, v.position.x - shape1, v.position.y - shape1)
+    end
+    for k, v in pairs(F.static_collision) do
         if v.collision.moved then
             checkCollision(v)
             v.collision.moved = nil
@@ -103,7 +122,10 @@ end
 s.functions.reset = function()
     lib = scripts.systems.collision.lib
     lib.add_rule("test", "test", lib.trivial_solve)
-
+    lib.add_rule("fire", "dwarf",
+        function(a, b)
+            b.hp = 0
+        end)
     WORLD = bump.newWorld(50)
     s.circles = {}
     s.boxes = {}
@@ -111,7 +133,6 @@ s.functions.reset = function()
     rpo = {}
 end
 s.functions.preventWallCollision = function()
-
 end
 
 s.registers = {}
@@ -139,7 +160,6 @@ end
 
 s.unregisters = {}
 s.unregisters.collision = function(entity)
-    print("Static  collision entity removed")
     s.circles[entity] = nil
     s.boxes[entity] = nil
     WORLD:remove(entity)

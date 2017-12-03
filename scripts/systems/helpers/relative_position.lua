@@ -3,7 +3,7 @@ s.functions = {}
 local prevposses = {}
 
 s.functions.update = function(dt)
-    for k, v in ipairs(E.relative_position) do
+    for k, v in pairs(F.relative_position) do
         v.position.x, v.position.y = v.relativeto.position.x + v.position.x - prevposses[v].x, v.relativeto.position.y + v.position.y - prevposses[v].y
         local dr = v.relativeto.position.rotation - prevposses[v].rotation
         local po = {x=v.position.x - v.relativeto.position.x, y= v.position.y - v.relativeto.position.y}

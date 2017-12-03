@@ -2,7 +2,6 @@
 core.filter = {}
 core.filter.rules = {}
 id_counter = id_counter or 1
-E = E or {} -- E is the entity lists, so E.walls is going to contain all walls.
 F = F or {} -- F is the entity list, but as a dictionary
 id_to_entity = id_to_entity or {} -- id_to_entity is the list of ID -> Entity
 entity_to_id = entity_to_id or {} -- entity_to_id is the list of Entity -> ID
@@ -16,7 +15,6 @@ end
 
 core.filter.add = function(name, rules)
     local R = core.filter.rules
-    E[name] = {}
     F[name] = {}
     R[#R + 1] = { name, rules }
 end
@@ -25,7 +23,6 @@ end
 core.filter.remove = function(name)
     local R = core.filter.rules
     local name = name[1]
-    E[name] = nil
     F[name] = nil
     for k, v in ipairs(R) do
         if v[1] == name then
@@ -35,18 +32,15 @@ core.filter.remove = function(name)
         end
     end
 end
-
+function core.filter.get(name)
+    for k,v in pairs(F[name]) do
+        return k
+    end
+    return nil
+end
 core.filter.update = function(entity)
     -- Add the entity to the ID-lists
-    while (id_to_entity[id_counter]) do
-        id_counter = id_counter + 10000
-    end
 
-    if not F[entity] then
-        id_to_entity[id_counter] = entity
-        entity_to_id[entity] = id_counter
-        id_counter = id_counter + 1
-    end
     local R = core.filter.rules
     for _, name_rules in pairs(R) do
         local name, rule = name_rules[1], name_rules[2]
@@ -109,9 +103,7 @@ core.filter.update = function(entity)
         -- if the state of this entity changes with respect of this filter; update tables
         if not all and F[name][entity] then
             -- entity was part of filter, but now not anymore
-            local ind = F[name][entity]
-            E[name][ind] = E[name][#E[name]]
-            E[name][#E[name]] = nil
+
             F[name][entity] = nil
             -- TODO: Run unregister functions
             if core.system.unregisters[name] then
@@ -123,8 +115,7 @@ core.filter.update = function(entity)
 
         if all and not F[name][entity] then
             -- entity not was part of filter, but will now be
-            E[name][#(E[name]) + 1] = entity
-            F[name][entity] = #(E[name])
+            F[name][entity] = entity
 
             -- TODO: Run register functions
             if core.system.registers[name] then

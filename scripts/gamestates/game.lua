@@ -29,13 +29,10 @@ function ctx:enter()
     core.entity.add(neck)
     local head = scripts.entities.dragonHead(neck)
     core.entity.add(head)
-
     core.entity.add(scripts.entities.dwarf_spawner(0.5 * 32 * 16-500, 32 * 20.5 * 16, 0, 5, nil))
-
-
-    E.currentframe = 0
+    CURRENTFRAME = 0
     local spread = 1000
-    for i = 1, 100 do
+    for i = 1, 1000 do
         core.entity.add(scripts.entities.dwarf(0.5 * 32 * 16 - spread + math.random(spread * 2), 32 * 20.5 * 16 - spread + math.random(spread * 2), 0))
     end
     core.entity.add(ent)
@@ -52,7 +49,7 @@ end
 
 
 function ctx:update(dt)
-    E.currentframe = E.currentframe + 1
+    CURRENTFRAME = CURRENTFRAME + 1
     scripts.main.mainloop(dt)
 
     local resource = love.graphics.newImage("assets/images/sprites/dwarf/dwarf0.png")
@@ -60,7 +57,7 @@ function ctx:update(dt)
     core.run("dwarf", scripts.systems.dwarfs.sprite_batch_fill, { sb = ctx.dwarf_sprite_batch, image = resource })
     ctx.dwarf_sprite_batch:flush()
     suit.layout:reset((love.graphics.getWidth() / 3) * 2, 33)
-    suit.Slider({ value = E.hoard[1].current_turn_len, min = 0, max = 120 }, { id = 'Day progress', valign = "bottom", notMouseEditable = true }, suit.layout:row(love.graphics.getWidth() / 3, 15))
+    suit.Slider({ value = core.filter.get("hoard").current_turn_len, min = 0, max = 120 }, { id = 'Day progress', valign = "bottom", notMouseEditable = true }, suit.layout:row(love.graphics.getWidth() / 3, 15))
     suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Chatbox", font = love.graphics.getFont(), valign = "top" }, -10, -10, love.graphics.getWidth() + 10, 55)
 end
 
@@ -78,14 +75,14 @@ function ctx:draw()
 
     core.run("player", scripts.systems.rendering.renderDragon, { dt = dt })
     --    scripts.systems.collision.debug_draw(dt)
---    if DEBUGVALUE ~= nil then
---        local r, g, b, a = love.graphics.getColor()
---        love.graphics.setColor(255, 0, 0)
---        for _, x in pairs(DEBUGVALUE) do
---            love.graphics.line(unpack(x))
---        end
---        love.graphics.setColor(r, g, b, a)
---    end
+    if DEBUGVALUE ~= nil then
+        local r, g, b, a = love.graphics.getColor()
+        love.graphics.setColor(255, 0, 0)
+        for _, x in pairs(DEBUGVALUE) do
+            love.graphics.line(unpack(x))
+        end
+        love.graphics.setColor(r, g, b, a)
+    end
     love.graphics.pop()
     suit.draw()
     core.run("hoard", scripts.systems.money.money.show_money, {})

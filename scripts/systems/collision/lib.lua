@@ -64,7 +64,7 @@ f.check_rule = function(entity1, entity2)
 end
 
 f.execute_if_rule = function(entity1, entity2, prev)
-    local f = rules[entity1.collision.type][entity2.collision.type]
+    local f = rules[entity1.collision.type] and rules[entity1.collision.type][entity2.collision.type]
     if f then
         return f(entity1, entity2, prev)
     end

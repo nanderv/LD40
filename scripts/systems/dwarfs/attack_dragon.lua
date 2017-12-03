@@ -1,5 +1,5 @@
 return function(entity, args)
-    -- if entity.updateframe ~= E.currentframe % 5 then
+    -- if entity.updateframe ~= CURRENTFRAME % 5 then
     --     return
     -- end
 
@@ -7,21 +7,16 @@ return function(entity, args)
     local speed = 0.08
     local rotatespeed = 0.5
 
-    local pp, ep = E.player[1].position, entity.position
+    local pp, ep =core.filter.get("player").position, entity.position
 
     -- rotate player poligon
-    local pol = scripts.systems.collision.lib.rotate_poly(E.player[1])
+    local pol = scripts.systems.collision.lib.rotate_poly(core.filter.get("player"))
 
     -- get the line that goes down through the middle
     local x1, y1 = pol[1].x, pol[1].y
     local x2, y2 = pol[3].x, pol[3].y
 
-    if DEBUG then
-        DEBUGVALUE = DEBUGVALUE or {}
-        DEBUGVALUE[entity.offset] = { pp.x + x1 + ((x2 - x1) * entity.offset), pp.y + y1 + ((y2 - y1) * entity.offset), ep.x, ep.y }
-        local mx, my = love.mouse.getX(), love.mouse.getY()
-        DEBUGVALUE[1] = { E.camera[1].position.x + mx, E.camera[1].position.y + my, entity.position.x, entity.position.y }
-    end
+
 
     -- get the delta from entity to player
     local dx, dy = (pp.x + x1 + ((x2 - x1) * entity.offset)) - ep.x, (pp.y + y1 + ((y2 - y1) * entity.offset)) - ep.y

@@ -8,11 +8,8 @@ money.multiplier = 100
 local txt = ""
 
 money.get_money_ent = function()
-    local l = E["hoard"]
-    local entity
-    for _, v in ipairs(l) do
-        return v
-    end
+    core.filter.get("hoard")
+
 end
 
 money.update_text = function(text)
