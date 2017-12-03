@@ -122,6 +122,7 @@ s.functions.reset = function()
         function(a, b)
             b.hp = 0
         end)
+    lib.add_rule("dwarf", "player", function (a, b) b.hp = b.hp - 1  end)
     WORLD = bump.newWorld(50)
     s.circles = {}
     s.boxes = {}

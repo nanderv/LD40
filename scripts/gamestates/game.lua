@@ -30,7 +30,7 @@ function ctx:enter()
     core.entity.add(neck)
     local head = scripts.entities.dragonHead(neck)
     core.entity.add(head)
-    core.entity.add(scripts.entities.dwarf_spawner(0.5 * 32 * 20 - 500, 32 * 20.5 * 20, math.pi / 2, 0.01))
+    core.entity.add(scripts.entities.dwarf_spawner(0.5 * 32 * 20 - 500, 32 * 20.5 * 20, math.pi / 2, 0.1))
     CURRENTFRAME = 0
     local spread = 1000
     --    for i = 1, 1000 do
@@ -56,6 +56,10 @@ function ctx:update(dt)
     suit.Slider({ value = core.filter.get("player").hp, min = 0, max = 1020 }, { id = 'Health', valign = "top", notMouseEditable = true }, suit.layout:col(love.graphics.getWidth() / 4, 15))
     suit.Slider({ value = core.filter.get("hoard").current_turn_len, min = 0, max = 120 }, { id = 'Day progress', valign = "top", notMouseEditable = true }, suit.layout:col())
     suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Hotbar", font = love.graphics.getFont(), valign = "bottom" }, -10, -10, love.graphics.getWidth() + 10, 55)
+    if DOSWITCH then
+        GS.switch(scripts.gamestates.overworld)
+        DOSWITCH = false
+    end
 end
 
 
