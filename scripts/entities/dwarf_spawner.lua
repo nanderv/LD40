@@ -1,5 +1,5 @@
 local SIZE = 32
-return function(x, y, rotation, spawn_every_x_frames, spawn_x_dwarfs_per_frame)
+return function(x, y, rotation, dps)
     local col_shape = {
         type = "wall",
         box = true,
@@ -10,9 +10,10 @@ return function(x, y, rotation, spawn_every_x_frames, spawn_x_dwarfs_per_frame)
     local dwarf_spawner = {
         collision = col_shape,
         position = position,
-        spawn_every_x_frames = spawn_every_x_frames,
-        spawn_x_dwarfs_per_frame = spawn_x_dwarfs_per_frame,
-        dwarf_spawner = true
+        spawnrate = dps,
+        dwarfSpawner = true,
+        counter = 0,
+        spawns = 0
     }
     return dwarf_spawner
 end

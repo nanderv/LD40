@@ -29,12 +29,12 @@ function ctx:enter()
     core.entity.add(neck)
     local head = scripts.entities.dragonHead(neck)
     core.entity.add(head)
-    core.entity.add(scripts.entities.dwarf_spawner(0.5 * 32 * 16-500, 32 * 20.5 * 16, 0, 5, nil))
+    core.entity.add(scripts.entities.dwarf_spawner(0.5 * 32 * 16-500, 32 * 20.5 * 16, 0, 0.25))
     CURRENTFRAME = 0
     local spread = 1000
-    for i = 1, 1000 do
-        core.entity.add(scripts.entities.dwarf(0.5 * 32 * 16 - spread + math.random(spread * 2), 32 * 20.5 * 16 - spread + math.random(spread * 2), 0))
-    end
+--    for i = 1, 1000 do
+--        core.entity.add(scripts.entities.dwarf(0.5 * 32 * 16 - spread + math.random(spread * 2), 32 * 20.5 * 16 - spread + math.random(spread * 2), 0))
+--    end
     core.entity.add(ent)
     core.entity.add(HOARD)
     local h1 = core.newHandler("mouse", function(event) return event.type=="mouseclick" end, {type = "list"})
