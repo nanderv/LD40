@@ -8,7 +8,7 @@ end
 clickOn.findAllClickableObjects = function(filter)
     return function(event)
         local objs = {}
-        for k, v in ipairs(E[filter]) do
+        for k, v in pairs(F[filter]) do
             if scripts.systems.collision.lib.point_in_polygon(v.collision.polygon, { x = event.x, y = event.y }, v.position, { x = 0, y = 0 }) then
                 objs[#objs + 1] = v
             end

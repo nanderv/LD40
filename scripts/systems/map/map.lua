@@ -69,6 +69,7 @@ s.registers.mapPosition = function(entity)
 end
 s.unregisters = {}
 s.unregisters.mapPosition = function(entity)
+    if not entity or not entity.mapPosition then return end
     s.map[entity.mapPosition.x .. ":" .. entity.mapPosition.y] = nil
 end
 

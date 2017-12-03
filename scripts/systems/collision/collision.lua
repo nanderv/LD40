@@ -87,11 +87,11 @@ end
 
 s.functions.update = function(dt)
     rpo = {}
-    for k, v in ipairs(E.dynamic_collision) do
+    for k, v in pairs(F.dynamic_collision) do
 
         checkCollision(v)
     end
-    for k, v in ipairs(E.static_collision) do
+    for k, v in pairs(F.static_collision) do
         if v.collision.moved then
             checkCollision(v)
             v.collision.moved = nil
@@ -141,7 +141,7 @@ end
 
 s.unregisters = {}
 s.unregisters.collision = function(entity)
-    print("Static  collision entity removed", entity)
+--    print("Static  collision entity removed", entity)
     s.circles[entity] = nil
     s.boxes[entity] = nil
     WORLD:remove(entity)

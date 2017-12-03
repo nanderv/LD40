@@ -1,9 +1,9 @@
 -- Draw debug shapes of the collision system.
 local s = function(dt)
-    if not E.collision then
+    if not F.collision then
         return
     end
-    for _, v in pairs(E.collision) do
+    for _, v in pairs(F.collision) do
         local arr = {}
         for _, w in ipairs(v.collision.polygon) do
             local x = core.rotate_point(w, v.position.rotation)

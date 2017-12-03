@@ -12,9 +12,10 @@ return function(entity, args)
         entity.position.y = entity.position.y + math.sin(entity.position.rotation)* 60 * dt
     end
     if love.keyboard.isDown("w") then
-        if E.dragonHead and E.dragonHead[1] and E.dragonHead[1].position.rotation ~= entity.position.rotation then
+        local a = core.filter.get("dragonHead")
+        if a and a.position.rotation ~= entity.position.rotation then
             -- rotateTowards
-            local a_rot = entity.position.rotation -  E.dragonHead[1].position.rotation
+            local a_rot = entity.position.rotation - a.position.rotation
             while  a_rot < 0 do
                 a_rot =  a_rot+math.pi*2
             end
@@ -23,9 +24,9 @@ return function(entity, args)
             end
             if math.abs(a_rot) > 0.1 then
                 if a_rot > math.pi then
-                    entity.position.rotation = entity.position.rotation  + dt*1.4
+                    entity.position.rotation = entity.position.rotation  + dt
                 else
-                    entity.position.rotation = entity.position.rotation  -dt*1.4
+                    entity.position.rotation = entity.position.rotation  -dt
                 end
             end
         end

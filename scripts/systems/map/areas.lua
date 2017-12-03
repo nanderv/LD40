@@ -49,7 +49,7 @@ function areas.genArea(x, y, first)
 end
 
 function areas.update(_)
-    local p = E.player[1]
+    local p =core.filter.get("player")
     local x, y = math.floor(p.position.x / (32 * 32)), math.floor(p.position.y / (32 * 32))
 
 
