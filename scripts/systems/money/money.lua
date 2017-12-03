@@ -138,12 +138,13 @@ money.debug_button = function(type)
 end
 
 money.show_money = function(ent)
-    local quanta = (love.graphics.getWidth() - 20) / 3
+    local quanta = (love.graphics.getWidth() - 20) / 4
     local oldfont = love.graphics.getFont()
     love.graphics.setNewFont(20)
     love.graphics.printf("Total in stash: " .. ent.money.total, 10, 10, quanta, "center")
     love.graphics.printf("Treasure in pocket: " .. ent.money.pocket_treasure, 10 + quanta, 10, quanta, "center")
-    love.graphics.printf("Day progress", 10 + (2 * quanta), 10, quanta, "center")
+    love.graphics.printf("Health", 10 + (2 * quanta), 10, quanta, "center")
+    love.graphics.printf("Day progress", 10 + (3 * quanta), 10, quanta, "center")
     love.graphics.setFont(oldfont)
 
     if DEBUG then
