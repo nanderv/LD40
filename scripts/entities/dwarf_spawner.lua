@@ -1,5 +1,5 @@
 local SIZE = 32
-return function(x, y, rotation, dps)
+return function(x, y, rotation, type, dps)
     local col_shape = {
         type = "wall",
         box = true,
@@ -12,6 +12,7 @@ return function(x, y, rotation, dps)
         position = position,
         spawnrate = dps,
         dwarfSpawner = true,
+        spawn_type = type,
         counter = 0,
         spawns = 0
     }
