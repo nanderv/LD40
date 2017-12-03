@@ -37,7 +37,9 @@ function areas.genAll()
         for x = 0, #tiles do
             line = line .. areas.map[x..":"..y]
             if areas.map[x..":"..y] == "#" then
-                core.entity.add(scripts.entities.wall(x,y))
+                core.entity.add(scripts.entities.wall(x,y, "testmap"))
+            else
+                core.entity.add(scripts.entities.ground(x,y, "ground"))
             end
         end
         print(line)
