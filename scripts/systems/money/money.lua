@@ -24,7 +24,8 @@ money.update = function(entity, args)
     if ent.current_turn_len >= daylen then
         HOARD.current_turn_len = 0
         ent.current_turn_len = 0
-        GS.switch(scripts.gamestates.overworld)
+        scripts.systems.money.money.end_raid(false)
+        DOSWITCH = true
     end
 
     if ent.current_second_progress >= 1 then

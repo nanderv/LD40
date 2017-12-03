@@ -56,14 +56,14 @@ local function checkCollision(entity1)
 
                 -- Check if the collision is necessary. I think this is slightly slower than the previous check, so that's why this one is later. Not tested for speed.
                 local collided = false
-                if entity2.collision.type == "dwarf" and entity1.collision.type == "fire" and dwarfBurnt < 2 then
+                if (entity2.collision.type == "dwarf" or entity2.collision.type == "explosive_dwarf") and entity1.collision.type == "fire" and dwarfBurnt < 2 then
 
                     local p1 = rpo[entity1]
                     if not p1 then
                         p1 = lib.rotate_poly(entity1)
                         rpo[entity1] = p1
                     end
-                    collided = lib.point_in_polygon(p1, {x=0,y=0}, entity1.position, entity2.position)
+                    collided = lib.point_in_polygon(p1, { x = 0, y = 0 }, entity1.position, entity2.position)
                     if collided then dwarfBurnt = dwarfBurnt + 1 end
                 elseif lib.check_rule(entity1, entity2) then
                     local p1 = rpo[entity1]
@@ -119,10 +119,25 @@ s.functions.reset = function()
     lib = scripts.systems.collision.lib
     lib.add_rule("test", "test", lib.trivial_solve)
     lib.add_rule("fire", "dwarf",
-        function(a, b)
+        function(_, b)
             b.hp = 0
         end)
-    lib.add_rule("dwarf", "player", function (a, b) b.hp = b.hp - 1  end)
+    lib.add_rule("fire", "explosive_dwarf",
+        function(_, b)
+            b.hp = 0
+        end)
+    lib.add_rule("dwarf", "player", function(_, b) b.hp = b.hp - 1 end)
+    lib.add_rule("explosive_dwarf", "player", function(a, b)
+        a.hp = 0
+        b.hp = b.hp - 30
+    end)
+    lib.add_rule("explosive_dwarf", "head", function(a, b)
+        a.hp = 0
+        while b.relativeto do
+            b = b.relativeto
+        end
+        b.hp = b.hp - 30
+    end)
     WORLD = bump.newWorld(50)
     s.circles = {}
     s.boxes = {}

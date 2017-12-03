@@ -39,7 +39,9 @@ function ctx:update(dt)
     love.graphics.setFont(oldfont)
 end
 
+local background_image = love.graphics.newImage("assets/images/backgrounds/overworld.png")
 function ctx:draw()
+    love.graphics.draw(background_image, 0, 40, 0, love.graphics.getWidth() / 1366, (love.graphics.getHeight() - 40) / 725, 0, 0)
     suit.draw()
     core.run("hoard", scripts.systems.money.money.show_money, {})
     love.graphics.print("<Son's name here> > Daddy!\n\tCan I PLEASE have more moneys?\n\tI need them for college, and\n\tif I don't get enough, I won't pass!", love.graphics.getWidth() / 2 - 400, 360)
