@@ -11,7 +11,6 @@ return function(dt)
     scripts.systems.helpers.relative_position.functions.update(dt)
     scripts.systems.map.areas.update(dt)
 
-    core.run("hoard", scripts.systems.money.money.update, { dt = dt })
     core.run("hp", scripts.systems.dwarfs.hp, { dt = dt })
 
 end

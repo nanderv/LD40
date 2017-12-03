@@ -7,7 +7,11 @@
 --
 return function(entity)
     if entity.hp <= 0 then
-        core.entity.remove(entity)
+        if entity.player then
+            DOSWITCH = true
+        else
+            core.entity.remove(entity)
+        end
     end
 end
 

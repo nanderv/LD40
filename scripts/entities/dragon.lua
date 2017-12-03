@@ -8,7 +8,7 @@
 return function(x, y, rotation)
     local col_shape =  { type = "player", box = false, polygon = { { x = 0, y = -80 }, { x = -30, y = 0 }, {x=0,y=80},{ x = 30, y = 0 } }, dynamic = true }
     local position = { x = x, y = y, rotation = rotation }
-    local dragon = {collision = col_shape, position = position, player = true, mousecontrol = true }
+    local dragon = {collision = col_shape, position = position, player = true, mousecontrol = true, hp = 1000 }
 
     return dragon
 end

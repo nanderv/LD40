@@ -13,6 +13,6 @@ return function(fst, relativeto, segment)
     else
         position = { x =0, y = -50, rotation =0 }
     end
-    pprint(position)
+--    pprint(position)
     return  {collision = col_shape, position = position, dragonNeck = true, relativeto = relativeto, segment = segment}
 end

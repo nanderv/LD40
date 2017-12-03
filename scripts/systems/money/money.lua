@@ -8,8 +8,7 @@ money.multiplier = 100
 local txt = ""
 
 money.get_money_ent = function()
-    core.filter.get("hoard")
-
+    return core.filter.get("hoard")
 end
 
 money.update_text = function(text)
@@ -24,7 +23,8 @@ money.update = function(entity, args)
     if ent.current_turn_len >= daylen then
         HOARD.current_turn_len = 0
         ent.current_turn_len = 0
-        GS.switch(scripts.gamestates.overworld)
+        scripts.systems.money.money.end_raid(false)
+        DOSWITCH = true
     end
 
     if ent.current_second_progress >= 1 then
@@ -80,11 +80,17 @@ money.start_raid = function()
     ent.in_raid = true
 end
 
-money.end_raid = function(dead)
+money.end_raid = function(alive)
     local ent = money.get_money_ent()
     if not ent then return end
+    if not ent.in_raid then return end
 
-    ent.money.total, ent.money.pocket_treasure = ent.money.pocket_treasure, 0
+    if alive then
+        ent.money.total, ent.money.pocket_treasure = ent.money.total + ent.money.pocket_treasure, 0
+    else
+        ent.money.pocket_treasure = 0
+    end
+
     ent.in_raid = false
     ent.raid_leve = ent.raid_level + 1
 end
@@ -138,12 +144,13 @@ money.debug_button = function(type)
 end
 
 money.show_money = function(ent)
-    local quanta = (love.graphics.getWidth() - 20) / 3
+    local quanta = (love.graphics.getWidth() - 20) / 4
     local oldfont = love.graphics.getFont()
     love.graphics.setNewFont(20)
     love.graphics.printf("Total in stash: " .. ent.money.total, 10, 10, quanta, "center")
     love.graphics.printf("Treasure in pocket: " .. ent.money.pocket_treasure, 10 + quanta, 10, quanta, "center")
-    love.graphics.printf("Day progress", 10 + (2 * quanta), 10, quanta, "center")
+    love.graphics.printf("Health", 10 + (2 * quanta), 10, quanta, "center")
+    love.graphics.printf("Day progress", 10 + (3 * quanta), 10, quanta, "center")
     love.graphics.setFont(oldfont)
 
     if DEBUG then
