@@ -10,6 +10,10 @@ return function(entity)
         if entity.player then
             DOSWITCH = true
         else
+            if entity.gold then
+                local m = core.filter.get("hoard").money
+                m.pocket_treasure = m.pocket_treasure + entity.gold
+            end
             core.entity.remove(entity)
         end
     end

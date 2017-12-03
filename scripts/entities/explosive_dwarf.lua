@@ -17,6 +17,6 @@ return function(x, y, rotation)
         offset = math.random(),
         updateframe = math.random(4),
         hp = 30,
-        fuse_offset = math.random(15)
+        fuse_offset = math.random(15), gold = 5
     }
 end
