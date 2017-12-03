@@ -1,4 +1,4 @@
-DEBUG = false
+DEBUG = true
 
 GS = require "lib.gamestate"
 love.math.setRandomSeed(love.timer.getTime())
@@ -29,7 +29,8 @@ HOARD = { money = { total = 0, lastgiven = 952, totalgiven = 0, lastleft = 0, po
 
 function love.load()
     GS.registerEvents()
-    GS.switch(scripts.gamestates.game)
+    core.entity.add(HOARD)
+    GS.push(scripts.gamestates.game)
 end
 
 function love.mousepressed(x, y, button)
@@ -39,6 +40,13 @@ end
 function love.keypressed(key, scancode, isrepeat)
     suit.keypressed(key)
     core.runEvent({ key = key, scancode = scancode, isrepeat = isrepeat, type = "key" })
+
+    if DEBUG then
+        if key == "c" then
+            print("Collecting garbage")
+            collectgarbage()
+        end
+    end
 end
 
 function love.textedited(text, start, length)

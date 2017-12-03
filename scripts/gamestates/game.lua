@@ -10,12 +10,13 @@ local ctx = GS.new()
 local input = { text = "" }
 
 function ctx:enter()
+    print("Entered " .. self.name)
+    core.entity.push()
 
     require 'scripts'
     scripts.systems.map.areas.genAll()
 
     scripts.systems.map.areas.genArea(0, 0, true)
-    GS.push(scripts.gamestates.overworld)
     scripts.systems.collision.collision.functions.reset()
     core.system.add(scripts.systems.collision.collision)
     core.system.add(scripts.systems.map.map)
@@ -32,16 +33,11 @@ function ctx:enter()
 
     E.currentframe = 0
     local spread = 1000
-    for i = 1, 100 do
+    for i = 1, 1 do
         core.entity.add(scripts.entities.dwarf(0.5 * 32 * 16 - spread + math.random(spread * 2), 32 * 20.5 * 16 - spread + math.random(spread * 2), 0))
     end
     core.entity.add(ent)
-    core.entity.add(HOARD)
     local h1 = core.newHandler("mouse", function(event) return event.type=="mouseclick" end, {type = "list"})
-
-    -- Hoard
-    ent = { money = { total = 0, lastgiven = 952, totalgiven = 0, lastleft = 0, pocket_treasure = 0 }, son = { happy_this_turn = false }, current_turn_len = 0, current_second_progress = 0, in_raid = false, raid_level = 1 }
-    core.entity.add(ent)
 
     rh.register()
 end
@@ -52,8 +48,8 @@ function ctx:update(dt)
     E.currentframe = E.currentframe + 1
     scripts.main.mainloop(dt)
     suit.layout:reset((love.graphics.getWidth() / 3) * 2, 33)
-    suit.Slider({ value = E.hoard[1].current_turn_len, min = 0, max = 120 }, { id = 'Day progress', valign = "bottom", notMouseEditable = true }, suit.layout:row(love.graphics.getWidth() / 3, 15))
-    suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Chatbox", font = love.graphics.getFont(), valign = "top" }, -10, -10, love.graphics.getWidth() + 10, 55)
+    suit.Slider({ value = E.hoard[1].current_turn_len, min = 0, max = 120 }, { id = 'Day progress', valign = "top", notMouseEditable = true }, suit.layout:row(love.graphics.getWidth() / 3, 15))
+    suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Hotbar", font = love.graphics.getFont(), valign = "bottom" }, -10, -10, love.graphics.getWidth() + 10, 55)
 end
 
 
@@ -64,7 +60,7 @@ function ctx:draw()
     love.graphics.setColor(255, 255, 255)
     love.graphics.push()
     love.graphics.translate(scripts.systems.camera.toX(0), scripts.systems.camera.toY(0))
-   scripts.systems.collision.debug_draw(dt)
+    scripts.systems.collision.debug_draw(dt)
 
     core.run("dwarf", scripts.systems.rendering.renderDwarf, { dt = dt })
     core.run("player", scripts.systems.rendering.renderDragon, { dt = dt })
@@ -83,14 +79,18 @@ function ctx:draw()
 
     if DEBUG then
         love.graphics.print(love.timer.getFPS(), 10, 30)
-        love.graphics.print(collectgarbage('count'), 50, 30)
+        love.graphics.print(collectgarbage('count') / 1024, 50, 30)
     end
 end
 
 
 function ctx:leave()
     love.mouse.setGrabbed(false)
-    print('leaving')
+    core.entity.pop()
+
+    print('Leaving ' .. self.name)
 end
+
+ctx.name = "GAME"
 
 return ctx

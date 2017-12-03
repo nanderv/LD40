@@ -3,10 +3,10 @@ local input = { text = "" }
 
 
 function ctx:enter(from)
+    print("Entered " .. self.name)
+
     ctx.from = from
     scripts.systems.money.money.end_raid()
-    core.entity.add(HOARD)
-    GS.pop()
 end
 
 function ctx:update(dt)
@@ -17,47 +17,45 @@ function ctx:update(dt)
     suit.layout:padding(5)
     suit.layout:push(suit.layout:row(400, 50))
     suit.Input(input, suit.layout:col(275, 50))
-    scripts.systems.money.money.update_text(input.text)
     if suit.Button("Give to son", suit.layout:col(120, 50)).hit then
         scripts.systems.money.money.give_to_son()
     end
     suit.layout:pop()
     if suit.Button("Begin raid", suit.layout:row()).hit then
-        self:leave()
+        print("Switching to game")
+        GS.switch(scripts.gamestates.game)
     end
     if suit.Button("Next day", suit.layout:row()).hit then
         scripts.systems.money.money.next_turn()
     end
-
+    suit.layout:reset((love.graphics.getWidth() / 3) * 2, 33)
+    suit.Slider({ value = E.hoard[1].current_turn_len, min = 0, max = 120 }, { id = 'Day progress', valign = "top", notMouseEditable = true }, suit.layout:row(love.graphics.getWidth() / 3, 15))
     suit._instance:registerDraw(suit._instance.theme.Button, "Chat: <Son's name here> (kid)", { id = "Chatbox_Title", font = love.graphics.getFont() }, love.graphics.getWidth() / 2 - 405, 300, 400, 50)
     suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Chatbox", font = love.graphics.getFont() }, love.graphics.getWidth() / 2 - 405, 355, 400, 105)
-    suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Hotbar", font = love.graphics.getFont() }, -10, -10, love.graphics.getWidth() + 10, 55)
-    suit.layout:reset((love.graphics.getWidth() / 3) * 2, 10)
-    suit.Slider({value = E.hoard[1].current_turn_len, min = 0, max = 120}, {vertical = true, id = 'Day progress', notMouseEditable = true}, suit.layout:row(love.graphics.getWidth() / 3, 40))
+    suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Hotbar", font = love.graphics.getFont(), valign = "bottom" }, -10, -10, love.graphics.getWidth() + 10, 55)
+
+    scripts.systems.money.money.update_text(input.text)
     love.graphics.setFont(oldfont)
 end
 
 function ctx:draw()
-    ctx.from:draw()
-    love.graphics.push()
-    love.graphics.translate(scripts.systems.camera.toX(0), scripts.systems.camera.toY(0))
-    scripts.systems.collision.debug_draw(dt)
-    love.graphics.pop()
-
-    core.run("hoard", scripts.systems.money.money.show_money, {})
     suit.draw()
+    core.run("hoard", scripts.systems.money.money.show_money, {})
     love.graphics.print("<Son's name here> > Daddy!\n\tCan I PLEASE have more moneys?\n\tI need them for college, and\n\tif I don't get enough, I won't pass!", love.graphics.getWidth() / 2 - 400, 360)
 
     if DEBUG then
         love.graphics.print(love.timer.getFPS(), 10, 30)
-        love.graphics.print(collectgarbage('count'), 50, 30)
+        love.graphics.print(collectgarbage('count') / 1024, 50, 30)
     end
 end
 
 function ctx:leave()
     scripts.systems.money.money.start_raid()
     love.mouse.setGrabbed(false)
-    print('leaving')
+
+    print('Leaving ' .. self.name)
 end
+
+ctx.name = "OVERWORLD"
 
 return ctx

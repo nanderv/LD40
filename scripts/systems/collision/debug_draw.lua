@@ -3,7 +3,7 @@ local s = function(dt)
     if not E.collision then
         return
     end
-    for _, v in ipairs(E.collision) do
+    for _, v in pairs(E.collision) do
         local arr = {}
         for _, w in ipairs(v.collision.polygon) do
             local x = core.rotate_point(w, v.position.rotation)

@@ -38,15 +38,15 @@ end
 
 core.filter.update = function(entity)
     -- Add the entity to the ID-lists
-    while (id_to_entity[id_counter]) do
-        id_counter = id_counter + 10000
-    end
-
-    if not F[entity] then
-        id_to_entity[id_counter] = entity
-        entity_to_id[entity] = id_counter
-        id_counter = id_counter + 1
-    end
+--    while (id_to_entity[id_counter]) do
+--        id_counter = id_counter + 10000
+--    end
+--
+--    if not F[entity] then
+--        id_to_entity[id_counter] = entity
+--        entity_to_id[entity] = id_counter
+--        id_counter = id_counter + 1
+--    end
     local R = core.filter.rules
     for _, name_rules in pairs(R) do
         local name, rule = name_rules[1], name_rules[2]

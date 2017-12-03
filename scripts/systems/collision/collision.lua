@@ -4,16 +4,10 @@ local bump = require 'lib.bump'
 WORLD = bump.newWorld(50)
 local lib = {}
 s.functions = {}
-COLS = {}
 s.circles = {}
 s.boxes = {}
-CIRC = s.circles
-BOXES = s.boxes
 local rpo = {}
 s.prev = {}
-s.get_WORLD = function()
-    return WORLD
-end
 local a = 0
 s.ray = function(entity1, from, to)
     local x3, y3, x4, y4 = entity1.position.x + from.x - to.x, entity1.position.y + from.y - to.y, entity1.position.x + to.x, entity1.position.y + to.y
@@ -139,7 +133,6 @@ end
 
 s.unregisters = {}
 s.unregisters.collision = function(entity)
-    print("Static  collision entity removed")
     s.circles[entity] = nil
     s.boxes[entity] = nil
     WORLD:remove(entity)
