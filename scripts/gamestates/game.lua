@@ -72,6 +72,8 @@ function ctx:draw()
     love.graphics.push()
     love.graphics.translate(scripts.systems.camera.toX(0), scripts.systems.camera.toY(0))
     scripts.systems.collision.debug_draw(dt)
+    core.run("mapImage",scripts.systems.rendering.renderMapTile)
+
     -- core.run("dwarf", scripts.systems.rendering.renderDwarf, { dt = dt })
 
     print(ctx.dwarf_sprite_batch:getCount())
