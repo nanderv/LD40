@@ -8,8 +8,7 @@ money.multiplier = 100
 local txt = ""
 
 money.get_money_ent = function()
-    core.filter.get("hoard")
-
+    return core.filter.get("hoard")
 end
 
 money.update_text = function(text)
