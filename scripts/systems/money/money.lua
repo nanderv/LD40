@@ -22,11 +22,12 @@ money.update = function(entity, args)
     ent.current_second_progress = ent.current_second_progress + args.dt
 
     if ent.current_turn_len >= daylen then
+        HOARD.current_turn_len = 0
         ent.current_turn_len = 0
-
---        local gameover = not money.next_turn()
+        GS.switch(scripts.gamestates.overworld)
     end
-    if ent.current_second_progress >= daylen then
+
+    if ent.current_second_progress >= 1 then
         ent.current_second_progress = 0
         money.second()
     end

@@ -40,7 +40,6 @@ function core.filter.get(name)
 end
 core.filter.update = function(entity)
     -- Add the entity to the ID-lists
-
     local R = core.filter.rules
     for _, name_rules in pairs(R) do
         local name, rule = name_rules[1], name_rules[2]
