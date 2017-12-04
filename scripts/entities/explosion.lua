@@ -7,5 +7,5 @@
 --
 local LOCALWIDTH = 32*20
 return function(x,y, img)
-    return {position={x=x ,y=y,rotation=0}, collision = { type = "explosion", box = true, polygon = { { x = -100, y = 0 }, { x = 0, y = 100 }, { x = 100, y = 0 }, {x=0, y=-100} }, dynamic = true}, toLive = 1}
+    return {position={x=x ,y=y,rotation=0}, collision = { type = "explosion", box = true, polygon = { { x = -100, y = 0 }, { x = 0, y = 100 }, { x = 100, y = 0 }, {x=0, y=-100} }, dynamic = true}, toLive = 1, explosion = 1}
 end

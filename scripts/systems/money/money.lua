@@ -61,6 +61,7 @@ money.give_to_son = function(amount)
     ent.money.totalgiven = ent.money.totalgiven + ent.money.lastgiven
     ent.money.total = ent.money.total - amount
     ent.money.lastleft = ent.money.total
+    LAST_RANDOM = nil
 
     return true
 end
@@ -90,6 +91,7 @@ money.start_raid = function()
 
     ent.dialog_status = nil
     ent.in_raid = true
+    LAST_RANDOM = nil
 end
 
 money.end_raid = function(alive)
@@ -101,12 +103,16 @@ money.end_raid = function(alive)
         ent.money.total, ent.money.pocket_treasure = ent.money.total + ent.money.pocket_treasure, 0
     else
         ent.money.pocket_treasure = 0
+        if ent.money.total  < ent.money.lastgiven * 1.05 then
+            money.next_turn()
+        end
     end
 
     ent.last_turn_alive_or_new_day = alive
 
     ent.in_raid = false
     ent.raid_leve = ent.raid_level + 1
+    LAST_RANDOM = nil
 end
 
 money.get_last_left = function()
@@ -131,6 +137,7 @@ money.next_turn = function()
     ent.last_turn_alive_or_new_day = true
     ent.raid_level = ent.raid_level + 1
     ent.dialog_status = nil
+    LAST_RANDOM = nil
     return true
 end
 
@@ -219,7 +226,7 @@ money.dialog.get = function()
     local ent = money.get_money_ent()
     if ent == nil then return "" end
     local messages = money.dialog.messages
-    local i = math.random(1, 16)
+    if not LAST_RANDOM then LAST_RANDOM = math.random(1, 16) end
 
     if ent.dialog_status then
         return ent.dialog_status
@@ -236,7 +243,7 @@ money.dialog.get = function()
     elseif ent.money.total >= ent.money.lastgiven * 1.05 and ent.raid_level % 3 == 0 then
         return messages.random_money_quest
     else
-        return messages.random[i]
+        return messages.random[LAST_RANDOM]
     end
 end
 
