@@ -71,14 +71,23 @@ function areas.genAll()
 end
 
 function areas.genArea(x, y, first)
-    if x==1 and y == 20 then
+    if x==1 and y == 20 or math.random() > 0.5 then
         areas.map[x .. ":" .. y] = "_"
         return
     end
+    roomsGenerated = roomsGenerated  + 1
     for k,v in pairs(spawnPatterns[currentPattern]) do
         -- Spawn Spawner
         print("SPAWN")
-        core.entity.add(scripts.entities.dwarf_spawner(32*v.x + x * 32 * 20 , 32 *v.y + y* 32* 20, math.pi / 2, "dwarf", 1, 300, 100))
+        if roomsGenerated > 20 and love.math.random() > 0.92 then
+            core.entity.add(scripts.entities.ballista(32*v.x + x * 32 * 20 , 32 *v.y + y* 32* 20, math.pi / 2, 1, 100, 100, 500, 20))
+
+        elseif roomsGenerated > 10 and love.math.random() > 0.85 then
+            core.entity.add(scripts.entities.dwarf_spawner(32*v.x + x * 32 * 20 , 32 *v.y + y* 32* 20, math.pi / 2, "explosive_dwarf", 10*#spawnPatterns[currentPattern]/math.sqrt(roomsGenerated), 80, 200))
+        else
+            core.entity.add(scripts.entities.dwarf_spawner(32*v.x + x * 32 * 20 , 32 *v.y + y* 32* 20, math.pi / 2, "dwarf",  6*#spawnPatterns[currentPattern]/math.sqrt(roomsGenerated), 80, 100))
+        end
+
 
     end
     currentPattern = currentPattern + mult
@@ -92,7 +101,7 @@ end
 function areas.update(_)
     local p = core.filter.get("player")
     local x, y = math.floor(p.position.x / (32 * 20)), math.floor(p.position.y / (32 * 20))
-
+    areas.map[x .. ":" .. y] = "A"
 
     neigh = { { x = x + 1, y = y }, { x = x - 1, y = y }, { x = x, y = y + 1 }, { x = x, y = y - 1 } }
     for k, v in ipairs(neigh) do
