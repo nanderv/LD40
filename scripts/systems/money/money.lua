@@ -44,14 +44,17 @@ money.give_to_son = function(amount)
 
     print(amount .. ":" .. ent.money.total)
     if amount < ent.money.lastgiven * 1.05 then
+        love.audio.newSource("assets/sfx/ChatNotification.ogg", "static"):play()
         ent.dialog_status = "> I really need more than that dad!"
         return false
     end
     if amount > ent.money.total then
+        love.audio.newSource("assets/sfx/ChatNotification.ogg", "static"):play()
         ent.dialog_status = "< I am trying to give you, but I can't give you more than I have!"
         return false
     end
     if ent.son.happy_this_turn then
+        love.audio.newSource("assets/sfx/Coins.ogg", "static"):play()
         ent.dialog_status = "> I don't need any more today!"
         return false
     end
@@ -62,7 +65,7 @@ money.give_to_son = function(amount)
     ent.money.total = ent.money.total - amount
     ent.money.lastleft = ent.money.total
     LAST_RANDOM = nil
-
+    love.audio.newSource("assets/sfx/ChatNotification.ogg", "static"):play()
     return true
 end
 
@@ -71,7 +74,7 @@ money.second = function()
     if not ent then return end
 
     if ent.in_raid then
-        local red = math.floor((ent.money.lastleft * 0.03) + (ent.money.totalgiven * 0.05))*0.2
+        local red = math.floor((ent.money.lastleft * 0.03) + (ent.money.totalgiven * 0.05)) * 0.2
         ent.money.total = ent.money.total - red
         if ent.money.total < 0 then ent.money.total = 0 end
         return red
@@ -82,6 +85,7 @@ money.open_chest = function()
     local ent = money.get_money_ent()
     if not ent then return end
 
+    love.audio.newSource("assets/sfx/Coins.ogg", "static"):play()
     ent.money.pocket_treasure = ent.money.pocket_treasure + ((ent.raid_level * money.multiplier) * (1 + math.random()))
 end
 
@@ -103,7 +107,7 @@ money.end_raid = function(alive)
         ent.money.total, ent.money.pocket_treasure = ent.money.total + ent.money.pocket_treasure, 0
     else
         ent.money.pocket_treasure = 0
-        if ent.money.total  < ent.money.lastgiven * 1.05 then
+        if ent.money.total < ent.money.lastgiven * 1.05 then
             money.next_turn()
         end
     end
@@ -113,6 +117,7 @@ money.end_raid = function(alive)
     ent.in_raid = false
     ent.raid_leve = ent.raid_level + 1
     LAST_RANDOM = nil
+    love.audio.newSource("assets/sfx/ChatNotification.ogg", "static"):play()
 end
 
 money.get_last_left = function()
@@ -132,7 +137,7 @@ money.next_turn = function()
         GS.switch(scripts.gamestates.gameover)
         return false
     end
-
+    love.audio.newSource("assets/sfx/ChatNotification.ogg", "static"):play()
     ent.son.happy_this_turn = false
     ent.last_turn_alive_or_new_day = true
     ent.raid_level = ent.raid_level + 1

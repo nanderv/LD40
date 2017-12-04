@@ -1,12 +1,19 @@
 local ctx = GS.new()
 local input = { text = "" }
 
+local notificationSound = love.audio.newSource("assets/sfx/ChatNotification.ogg", "static")
+local played = false
 function ctx:enter(from)
     print("Entered " .. self.name)
 
     ctx.from = from
     scripts.systems.money.money.end_raid(false)
 
+    love.audio.play(music)
+    if not played then
+        notificationSound:play()
+        played = true
+    end
 
 end
 
