@@ -30,13 +30,25 @@ slides[1] = function()
     love.graphics.print("Your Gamename Could Be Here", 200, 200)
     love.graphics.setFont(oldfont)
 end
-slides[2] = function()
-    local oldfont = love.graphics.getFont()
-    love.graphics.draw(background_image,0,0,0,love.graphics.getWidth( )/background_image:getWidth(), love.graphics.getHeight()/background_image:getHeight())
-    love.graphics.setFont(font2)
-    love.graphics.print("Some info here", 200, 200)
-    love.graphics.setFont(oldfont)
+local function getLineSlide(line)
+    return function()
+        local oldfont = love.graphics.getFont()
+        love.graphics.draw(background_image,0,0,0,love.graphics.getWidth( )/background_image:getWidth(), love.graphics.getHeight()/background_image:getHeight())
+        love.graphics.setFont(font2)
+        love.graphics.print(line, 200, 200)
+        love.graphics.setFont(oldfont)
+        end
 end
+slides[#slides+1] = getLineSlide("Son: Dad! Dad! I got accepted to college!")
+slides[#slides+1] = getLineSlide("Father: < That’s wonderful, son! ")
+slides[#slides+1] = getLineSlide("Son: > I kinda need money for books though, can you give me some from your hoard...?")
+slides[#slides+1] = getLineSlide("Father: ...")
+slides[#slides+1] = getLineSlide("Son: > > Come on, it’s not gonna be that much, I promise!")
+slides[#slides+1] = getLineSlide("Father: Ok...")
+slides[#slides+1] = getLineSlide("Father: I need to get more gold.\n\n Those pesky dwarves must have stolen some.\n\n They will burn.")
+
+slides[#slides+1] = getLineSlide("Every day, your child needs money for college. To get money, you need to raid.\nWhile you're off raiding, the dwarves will steal your gold.")
+
 function ctx:draw()
     slides[ctx.slide]()
 end
