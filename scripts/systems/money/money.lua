@@ -219,7 +219,7 @@ money.dialog.get = function()
     local ent = money.get_money_ent()
     if ent == nil then return "" end
     local messages = money.dialog.messages
-    local i = math.random(0, 15)
+    local i = math.random(1, 16)
 
     if ent.dialog_status then
         return ent.dialog_status
