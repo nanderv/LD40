@@ -21,11 +21,11 @@ function ctx:update(dt)
         scripts.systems.money.money.give_to_son()
     end
     suit.layout:pop()
-    if suit.Button("Begin raid", suit.layout:row()).hit then
+    if suit.Button("Begin raid", suit.layout:row()).hit and scripts.systems.money.money.get_money_ent().current_turn_len < 120 then
         print("Switching to game")
         GS.switch(scripts.gamestates.game)
     end
-    if suit.Button("Next day", suit.layout:row()).hit then
+    if suit.Button("Next day", suit.layout:row()).hit and (scripts.systems.money.money.get_money_ent().son.happy_this_turn or scripts.systems.money.money.get_money_ent().money.total < scripts.systems.money.money.get_money_ent().money.lastgiven) then
         scripts.systems.money.money.next_turn()
     end
     suit.layout:reset((love.graphics.getWidth() / 4) * 2, 33)

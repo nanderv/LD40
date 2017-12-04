@@ -20,10 +20,8 @@ money.update = function(entity, args)
     ent.current_turn_len = ent.current_turn_len + args.dt
     ent.current_second_progress = ent.current_second_progress + args.dt
 
-    if ent.current_turn_len >= daylen then
+    if ent.current_turn_len >= daylen and GS.current() ~= scripts.gamestates.overworld then
         if ent.money.total + ent.money.pocket_treasure >= ent.money.lastgiven * 1.05 then
-            HOARD.current_turn_len = 0
-            ent.current_turn_len = 0
             DOSWITCH = true
         else
             money.next_turn()
@@ -107,6 +105,9 @@ end
 money.next_turn = function()
     local ent = money.get_money_ent()
     if not ent then return end
+
+    HOARD.current_turn_len = 0
+    ent.current_turn_len = 0
 
     if not ent.son.happy_this_turn then
         GS.switch(scripts.gamestates.gameover)
