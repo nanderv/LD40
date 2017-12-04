@@ -22,6 +22,5 @@ for i=1,7 do
     frames[#frames + 1] =  love.graphics.newQuad((i-1)*resource:getWidth()/12, 0, h, h, resource:getDimensions())
 end
 return function(entity)
-    print("HERE")
     love.graphics.draw(resource, frames[math.floor(entity.explosion)],entity.position.x, entity.position.y, entity.position.rotation, 1, 1, resource:getHeight()/2, resource:getHeight()/2)
 end
