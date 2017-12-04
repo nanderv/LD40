@@ -1,5 +1,7 @@
 DEBUG = true
-local music = love.audio.newSource(love.filesystem.newFile("assets/music/Exploding Bards.ogg"), "stream"):play()
+local music = love.audio.newSource(love.filesystem.newFile("assets/music/Exploding Bards.ogg"), "stream")
+music:setLooping(true)
+music:play()
 
 GS = require "lib.gamestate"
 love.math.setRandomSeed(love.timer.getTime())

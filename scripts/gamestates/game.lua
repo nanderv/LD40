@@ -28,6 +28,8 @@ function ctx:enter()
     core.entity.add(neck)
     neck = scripts.entities.dragonNeck(false, neck, 2)
     core.entity.add(neck)
+    neck = scripts.entities.dragonNeck(false, neck, 3)
+    core.entity.add(neck)
     local head = scripts.entities.dragonHead(neck)
     core.entity.add(head)
 
@@ -85,9 +87,11 @@ function ctx:draw()
     core.run("dragonHead", scripts.systems.rendering.renderFire.draw)
     core.run("ballista", scripts.systems.rendering.renderBallista)
     core.run("arrow", scripts.systems.rendering.renderArrow)
+    core.run("dragonNeck", scripts.systems.rendering.renderDragonNeck)
+    core.run("dragonHead", scripts.systems.rendering.renderDragonHead)
 
     core.run("player", scripts.systems.rendering.renderDragon)
-
+    --scripts.systems.collision.debug_draw()
     if DEBUGVALUE ~= nil then
         local r, g, b, a = love.graphics.getColor()
         love.graphics.setColor(255, 0, 0)

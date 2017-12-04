@@ -9,7 +9,6 @@ function ctx:enter(from)
     ctx.from = from
     scripts.systems.money.money.end_raid(false)
 
-    love.audio.play(music)
     if not played then
         notificationSound:play()
         played = true

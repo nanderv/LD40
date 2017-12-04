@@ -6,7 +6,7 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-local resource = love.graphics.newImage("assets/images/sprites/dragon/dragon1.png")
+local resource = love.graphics.newImage("assets/images/sprites/dragon/dragon body.png")
 return function(entity)
-    love.graphics.draw(resource,entity.position.x, entity.position.y, entity.position.rotation, .7, .7, resource:getWidth()/2, resource:getHeight()/2)
+    love.graphics.draw(resource,entity.position.x, entity.position.y, entity.position.rotation, .7, .7, resource:getWidth()/2, resource:getHeight()/2-100)
 end

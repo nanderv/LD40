@@ -16,7 +16,7 @@ return function(entity, args)
     end
 
     for v, _ in pairs(F.dragonNeck) do
-        v.position.rotation = p.rotation + (dR - math.pi) / 3 * v.segment
+        v.position.rotation = p.rotation + (dR - math.pi) / 4 * v.segment
     end
 
     if love.mouse.isDown(1) then

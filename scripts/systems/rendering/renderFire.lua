@@ -5,7 +5,7 @@ local quad = love.graphics.newQuad(0, 0, 280, 294, 5040, 882)
 local params
 function fire.update(entity, args)
     if CURRENTFRAME % 2 ~= 0 then
-        local pos = core.rotate_point({ x = 0, y = -50, rotation = 0 }, entity.position.rotation)
+        local pos = core.rotate_point({ x = 0, y = -20, rotation = 0 }, entity.position.rotation)
         params = { animation, quad, entity.position.x + pos.x, entity.position.y + pos.y, entity.position.rotation, .7, .8, 140, 294 }
         return
     end
@@ -61,7 +61,7 @@ function fire.update(entity, args)
 
     quad:setViewport(x * 280, y * 294, 280, 294)
     entity.fire = ef
-    local pos = core.rotate_point({ x = 0, y = -50, rotation = 0 }, entity.position.rotation)
+    local pos = core.rotate_point({ x = 0, y = -20, rotation = 0 }, entity.position.rotation)
     params = { animation, quad, entity.position.x + pos.x, entity.position.y + pos.y, entity.position.rotation, .7, .8, 140, 294 }
 end
 
