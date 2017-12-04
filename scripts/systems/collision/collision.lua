@@ -62,7 +62,10 @@ local function checkCollision(entity1)
 
                     local dist = math.sqrt(dx*dx + dy*dy)
                     if entity2.hp then
-                        entity2.dhp = math.max(100-dist, 0)
+                        entity2.dhp = (entity2.dhp or 0) +  math.max(100-dist, 0)
+                    end
+                    if entity2.player then
+                        entity2.dhp = (entity2.dhp or 0)  + 300
                     end
                 end
                 if (entity2.collision.type == "dwarf" or entity2.collision.type == "explosive_dwarf") and entity1.collision.type == "fire" and dwarfBurnt < 2 then
@@ -126,14 +129,13 @@ end
 
 s.functions.reset = function()
     lib = scripts.systems.collision.lib
-    lib.add_rule("test", "test", lib.trivial_solve)
     lib.add_rule("fire", "dwarf",
         function(_, b)
-            b.dhp = 0
+            b.dhp = 60
         end)
     lib.add_rule("fire", "explosive_dwarf",
         function(_, b)
-            b.hp = 0
+            b.dhp = 60
         end)
     lib.add_rule("dwarf", "player", function(_, b) b.hp = b.hp - 1 end)
 
