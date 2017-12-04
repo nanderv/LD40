@@ -1,12 +1,14 @@
 local ctx = GS.new()
 local input = { text = "" }
-
+local music = love.audio.newSource(love.filesystem.newFile("assets/music/Exploding Bards.ogg"), "stream")
 
 function ctx:enter(from)
     print("Entered " .. self.name)
 
     ctx.from = from
     scripts.systems.money.money.end_raid(false)
+
+    love.audio.play(music)
 end
 
 function ctx:update(dt)
@@ -56,6 +58,7 @@ function ctx:leave()
     scripts.systems.money.money.start_raid()
     love.mouse.setGrabbed(false)
 
+    love.audio.stop(music)
     print('Leaving ' .. self.name)
 end
 
