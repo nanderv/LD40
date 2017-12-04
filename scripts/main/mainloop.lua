@@ -12,5 +12,6 @@ return function(dt)
     scripts.systems.map.areas.update(dt)
 
     core.run("hp", scripts.systems.dwarfs.hp, { dt = dt })
+    core.run("toLive", scripts.systems.limitedLife, { dt = dt })
 
 end

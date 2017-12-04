@@ -56,6 +56,15 @@ local function checkCollision(entity1)
 
                 -- Check if the collision is necessary. I think this is slightly slower than the previous check, so that's why this one is later. Not tested for speed.
                 local collided = false
+                if entity1.collision.type == "explosion" then
+                    local dx = entity1.position.x - entity2.position.x
+                    local dy = entity1.position.y - entity2.position.y
+
+                    local dist = math.sqrt(dx*dx + dy*dy)
+                    if entity2.hp then
+                        entity2.dhp = math.max(100-dist, 0)
+                    end
+                end
                 if (entity2.collision.type == "dwarf" or entity2.collision.type == "explosive_dwarf") and entity1.collision.type == "fire" and dwarfBurnt < 2 then
 
                     local p1 = rpo[entity1]
@@ -120,18 +129,21 @@ s.functions.reset = function()
     lib.add_rule("test", "test", lib.trivial_solve)
     lib.add_rule("fire", "dwarf",
         function(_, b)
-            b.hp = 0
+            b.dhp = 0
         end)
     lib.add_rule("fire", "explosive_dwarf",
         function(_, b)
             b.hp = 0
         end)
     lib.add_rule("dwarf", "player", function(_, b) b.hp = b.hp - 1 end)
-    lib.add_rule("explosive_dwarf", "player", function(a, b)
-        a.hp = 0
-        b.hp = b.hp - 30
-    end)
+
     lib.add_rule("explosive_dwarf", "head", function(a, b)
+        a.hp = 0
+        while b.relativeto do
+            b = b.relativeto
+        end
+    end)
+    lib.add_rule("explosive_dwarf", "player", function(a, b)
         a.hp = 0
         while b.relativeto do
             b = b.relativeto
