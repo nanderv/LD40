@@ -3,6 +3,7 @@ return function(dt)
         core.run("player", scripts.systems.controls.joystick, { dt = dt })
     end
     core.run("player", scripts.systems.controls.wasd, { dt = dt })
+    core.run("player", scripts.systems.leave_dungeon, {})
     core.run("mouseplayer", scripts.systems.controls.mouse, { dt = dt })
     core.run("dwarf", scripts.systems.dwarfs.attack_dragon, { dt = dt })
     core.run("dwarfSpawner", scripts.systems.dwarfs.dwarf_spawner, { dt = dt })
@@ -13,5 +14,4 @@ return function(dt)
 
     core.run("hp", scripts.systems.dwarfs.hp, { dt = dt })
     core.run("toLive", scripts.systems.limitedLife, { dt = dt })
-
 end
