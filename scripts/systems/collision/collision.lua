@@ -60,12 +60,12 @@ local function checkCollision(entity1)
                     local dx = entity1.position.x - entity2.position.x
                     local dy = entity1.position.y - entity2.position.y
 
-                    local dist = math.sqrt(dx*dx + dy*dy)
+                    local dist = math.sqrt(dx * dx + dy * dy)
                     if entity2.hp then
-                        entity2.dhp = (entity2.dhp or 0) +  math.max(100-dist, 0)
+                        entity2.dhp = (entity2.dhp or 0) + math.max(100 - dist, 0)
                     end
                     if entity2.player then
-                        entity2.dhp = (entity2.dhp or 0)  + 300
+                        entity2.dhp = (entity2.dhp or 0) + 300
                     end
                 end
                 if (entity2.collision.type == "dwarf" or entity2.collision.type == "explosive_dwarf") and entity1.collision.type == "fire" and dwarfBurnt < 2 then
@@ -142,19 +142,19 @@ s.functions.reset = function()
             b.dhp = 60
         end)
     lib.add_rule("dwarf", "player", function(_, b) b.hp = b.hp - 1 end)
-
-    lib.add_rule("explosive_dwarf", "head", function(a, b)
-        a.hp = 0
-        while b.relativeto do
-            b = b.relativeto
-        end
-    end)
+    lib.add_rule("explosive_dwarf", "head", function(a, _) a.hp = 0 end)
     lib.add_rule("explosive_dwarf", "player", function(a, b)
         a.hp = 0
         while b.relativeto do
             b = b.relativeto
         end
         b.hp = b.hp - 30
+    end)
+    lib.add_rule("arrow", "wall", function(a, _) a.hp = 0 end)
+    lib.add_rule("arrow", "player", function(a, b)
+        b.hp = b.hp - a.damage
+        a.hp = 0
+        print("arrow hit")
     end)
     WORLD = bump.newWorld(50)
     s.circles = {}
