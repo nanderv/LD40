@@ -21,11 +21,11 @@ function ctx:update(dt)
         scripts.systems.money.money.give_to_son()
     end
     suit.layout:pop()
-    if suit.Button("Begin raid", suit.layout:row()).hit then
+    if suit.Button("Begin raid", suit.layout:row()).hit and scripts.systems.money.money.get_money_ent().current_turn_len < 120 and scripts.systems.money.money.get_money_ent().last_turn_alive_or_new_day then
         print("Switching to game")
         GS.switch(scripts.gamestates.game)
     end
-    if suit.Button("Next day", suit.layout:row()).hit then
+    if suit.Button("Next day", suit.layout:row()).hit and (scripts.systems.money.money.get_money_ent().son.happy_this_turn or (scripts.systems.money.money.get_money_ent().money.total < scripts.systems.money.money.get_money_ent().money.lastgiven and scripts.systems.money.money.get_money_ent().current_turn_len >= 120)) then
         scripts.systems.money.money.next_turn()
     end
     suit.layout:reset((love.graphics.getWidth() / 4) * 2, 33)
@@ -39,12 +39,12 @@ function ctx:update(dt)
     love.graphics.setFont(oldfont)
 end
 
-local background_image = love.graphics.newImage("assets/images/backgrounds/overworld.png")
+local background_image = love.graphics.newImage("assets/images/backgrounds/background.png")
 function ctx:draw()
     love.graphics.draw(background_image, 0, 40, 0, love.graphics.getWidth() / 1366, (love.graphics.getHeight() - 40) / 725, 0, 0)
     suit.draw()
     core.run("hoard", scripts.systems.money.money.show_money, {})
-    love.graphics.print("<Son's name here> > Daddy!\n\tCan I PLEASE have more moneys?\n\tI need them for college, and\n\tif I don't get enough, I won't pass!", love.graphics.getWidth() / 2 - 400, 360)
+    love.graphics.print(scripts.systems.money.money.dialog.get(), love.graphics.getWidth() / 2 - 400, 360)
 
     if DEBUG then
         love.graphics.print(love.timer.getFPS(), 10, 30)

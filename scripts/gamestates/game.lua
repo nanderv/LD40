@@ -30,11 +30,11 @@ function ctx:enter()
     core.entity.add(neck)
     local head = scripts.entities.dragonHead(neck)
     core.entity.add(head)
-    core.entity.add(scripts.entities.dwarf_spawner(0.5 * 32 * 20 - 500, 32 * 20.5 * 20, math.pi / 2, "explosive_dwarf", 0.25))
-    core.entity.add(scripts.entities.dwarf_spawner(0.5 * 32 * 20 + 500, 32 * 20.5 * 20, math.pi / 2, "dwarf", 0.25))
+    core.entity.add(scripts.entities.dwarf_spawner(0.5 * 32 * 20 - 500, 32 * 20.5 * 20, math.pi / 2, "explosive_dwarf", 1, 100, 100))
+    core.entity.add(scripts.entities.dwarf_spawner(0.5 * 32 * 20 + 500, 32 * 20.5 * 20, math.pi / 2, "dwarf", 1, 100, 100))
     CURRENTFRAME = 0
     local spread = 1000
-    --    for i = 1, 1000 dowwwwwwwwwww
+    --    for i = 1, 1000 do
     --        core.entity.add(scripts.entities.dwarf(0.5 * 32 * 16 - spread + math.random(spread * 2), 32 * 20.5 * 16 - spread + math.random(spread * 2), 0))
     --    end
     core.entity.add(ent)
@@ -58,8 +58,6 @@ function ctx:update(dt)
     suit.Slider({ value = core.filter.get("hoard").current_turn_len, min = 0, max = 120 }, { id = 'Day progress', valign = "top", notMouseEditable = true }, suit.layout:col())
     suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Hotbar", font = love.graphics.getFont(), valign = "bottom" }, -10, -10, love.graphics.getWidth() + 10, 55)
     core.run("hoard", scripts.systems.money.money.update, { dt = dt })
-
-
     if DOSWITCH then
         GS.switch(scripts.gamestates.overworld)
         DOSWITCH = false
@@ -73,16 +71,20 @@ function ctx:draw()
     love.graphics.setColor(255, 255, 255)
     love.graphics.push()
     love.graphics.translate(scripts.systems.camera.toX(0), scripts.systems.camera.toY(0))
+    scripts.systems.collision.debug_draw(dt)
+    core.run("mapImage", scripts.systems.rendering.renderMapTile)
    scripts.systems.collision.debug_draw(dt)
     core.run("mapImage",scripts.systems.rendering.renderMapTile)
 
-    -- core.run("dwarf", scripts.systems.rendering.renderDwarf, { dt = dt })
+
     core.run("explosion", scripts.systems.rendering.renderExplosion, { dt = dt })
 
-    --print(ctx.dwarf_sprite_batch:getCount())
+
     love.graphics.draw(ctx.dwarf_sprite_batch, 0, 0)
+    core.run("dragonHead", scripts.systems.rendering.renderFire.draw)
+
     core.run("player", scripts.systems.rendering.renderDragon, { dt = dt })
-    --    scripts.systems.collision.debug_draw(dt)
+
     if DEBUGVALUE ~= nil then
         local r, g, b, a = love.graphics.getColor()
         love.graphics.setColor(255, 0, 0)
