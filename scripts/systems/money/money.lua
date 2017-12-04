@@ -105,6 +105,10 @@ money.end_raid = function(alive)
         ent.money.pocket_treasure = 0
     end
 
+    if ent.money.total  < ent.money.lastgiven * 1.05 then
+        money.next_turn()
+    end
+
     ent.last_turn_alive_or_new_day = alive
 
     ent.in_raid = false
