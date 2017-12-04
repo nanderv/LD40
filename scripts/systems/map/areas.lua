@@ -80,9 +80,10 @@ function areas.genArea(x, y, first)
         -- Spawn Spawner
         print("SPAWN")
         if roomsGenerated > 20 and love.math.random() > 0.92 then
+            core.entity.add(scripts.entities.ballista(32*v.x + x * 32 * 20 , 32 *v.y + y* 32* 20, math.pi / 2, 1, 100, 100, 500, 20))
 
         elseif roomsGenerated > 10 and love.math.random() > 0.85 then
-            core.entity.add(scripts.entities.dwarf_spawner(0.5 * 32 * 20 - 500, 32 * 20.5 * 20, math.pi / 2, "explosive_dwarf", 10*#spawnPatterns[currentPattern]/math.sqrt(roomsGenerated), 80, 200))
+            core.entity.add(scripts.entities.dwarf_spawner(32*v.x + x * 32 * 20 , 32 *v.y + y* 32* 20, math.pi / 2, "explosive_dwarf", 10*#spawnPatterns[currentPattern]/math.sqrt(roomsGenerated), 80, 200))
         else
             core.entity.add(scripts.entities.dwarf_spawner(32*v.x + x * 32 * 20 , 32 *v.y + y* 32* 20, math.pi / 2, "dwarf",  6*#spawnPatterns[currentPattern]/math.sqrt(roomsGenerated), 80, 100))
         end

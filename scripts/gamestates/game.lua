@@ -31,8 +31,7 @@ function ctx:enter()
     local head = scripts.entities.dragonHead(neck)
     core.entity.add(head)
 
-    core.entity.add(scripts.entities.ballista(0.5 * 32 * 20 - 500, 32 * 20.5 * 20, math.pi / 2, 1, 100, 100, 500, 20))
-    core.entity.add(scripts.entities.ballista(0.5 * 32 * 20 + 500, 32 * 20.5 * 20 + 300, math.pi / 2, 1, 100, 100, 500, 20))
+
      CURRENTFRAME = 0
     local spread = 1000
     --    for i = 1, 1000 do

@@ -71,7 +71,7 @@ money.second = function()
     if not ent then return end
 
     if ent.in_raid then
-        local red = math.floor((ent.money.lastleft * 0.03) + (ent.money.totalgiven * 0.05))
+        local red = math.floor((ent.money.lastleft * 0.03) + (ent.money.totalgiven * 0.05))*0.2
         ent.money.total = ent.money.total - red
         if ent.money.total < 0 then ent.money.total = 0 end
         return red
