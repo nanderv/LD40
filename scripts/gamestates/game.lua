@@ -58,6 +58,8 @@ function ctx:update(dt)
     suit.Slider({ value = core.filter.get("hoard").current_turn_len, min = 0, max = 120 }, { id = 'Day progress', valign = "top", notMouseEditable = true }, suit.layout:col())
     suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Hotbar", font = love.graphics.getFont(), valign = "bottom" }, -10, -10, love.graphics.getWidth() + 10, 55)
     core.run("hoard", scripts.systems.money.money.update, { dt = dt })
+
+
     if DOSWITCH then
         GS.switch(scripts.gamestates.overworld)
         DOSWITCH = false
@@ -75,10 +77,10 @@ function ctx:draw()
     core.run("mapImage",scripts.systems.rendering.renderMapTile)
 
     -- core.run("dwarf", scripts.systems.rendering.renderDwarf, { dt = dt })
+    core.run("explosion", scripts.systems.rendering.renderExplosion, { dt = dt })
 
     --print(ctx.dwarf_sprite_batch:getCount())
     love.graphics.draw(ctx.dwarf_sprite_batch, 0, 0)
-
     core.run("player", scripts.systems.rendering.renderDragon, { dt = dt })
     --    scripts.systems.collision.debug_draw(dt)
     if DEBUGVALUE ~= nil then

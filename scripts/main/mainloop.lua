@@ -11,6 +11,7 @@ return function(dt)
     scripts.systems.camera.update(dt)
     scripts.systems.helpers.relative_position.functions.update(dt)
     scripts.systems.map.areas.update(dt)
+    core.run("explosion", scripts.systems.rendering.explosionAnimation, { dt = dt })
 
     core.run("hp", scripts.systems.dwarfs.hp, { dt = dt })
     core.run("toLive", scripts.systems.limitedLife, { dt = dt })
