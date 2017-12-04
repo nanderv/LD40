@@ -1,4 +1,8 @@
 return function(entity, args)
+    if entity.arrow then
+        return
+    end
+
     local x, y
     if entity.explosive then
         entity.fuse = CURRENTFRAME % entity.fuse_offset > 7

@@ -4,10 +4,10 @@ return function(entity, args)
     -- end
 
     local dt = args.dt
-    local speed = 0.16
-    local rotatespeed = 0.5
+    local speed = entity.speed or 0.16
+    local rotatespeed = entity.rotatespeed or 0.5
 
-    local pp, ep =core.filter.get("player").position, entity.position
+    local pp, ep = core.filter.get("player").position, entity.position
 
     -- rotate player poligon
     local pol = scripts.systems.collision.lib.rotate_poly(core.filter.get("player"))
@@ -17,13 +17,14 @@ return function(entity, args)
     local x2, y2 = pol[3].x, pol[3].y
 
     -- get the delta from entity to player
-    local dx, dy = (pp.x + x1 + ((x2 - x1) * entity.offset)) - ep.x, (pp.y + y1 + ((y2 - y1) * entity.offset)) - ep.y
+    local px, py = (pp.x + x1 + ((x2 - x1) * entity.offset)), (pp.y + y1 + ((y2 - y1) * entity.offset))
+    local dx, dy = px - ep.x, py - ep.y
 
     -- move entity towards player
     ep.x = ep.x + dx * speed * dt
     ep.y = ep.y + dy * speed * dt
 
-    local dr = core.get_rotation(pp, ep) - entity.position.rotation
+    local dr = core.get_rotation({ x = px, y = py, rotation = pp.rotation }, ep) - entity.position.rotation
 
 
     entity.position.rotation = entity.position.rotation + dr * rotatespeed * dt

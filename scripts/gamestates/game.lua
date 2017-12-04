@@ -31,7 +31,9 @@ function ctx:enter()
     local head = scripts.entities.dragonHead(neck)
     core.entity.add(head)
 
-    CURRENTFRAME = 0
+    core.entity.add(scripts.entities.ballista(0.5 * 32 * 20 - 500, 32 * 20.5 * 20, math.pi / 2, 1, 100, 100, 500, 20))
+    core.entity.add(scripts.entities.ballista(0.5 * 32 * 20 + 500, 32 * 20.5 * 20 + 300, math.pi / 2, 1, 100, 100, 500, 20))
+     CURRENTFRAME = 0
     local spread = 1000
     --    for i = 1, 1000 do
     --        core.entity.add(scripts.entities.dwarf(0.5 * 32 * 16 - spread + math.random(spread * 2), 32 * 20.5 * 16 - spread + math.random(spread * 2), 0))
@@ -70,7 +72,7 @@ function ctx:draw()
     love.graphics.setColor(255, 255, 255)
     love.graphics.push()
     love.graphics.translate(scripts.systems.camera.toX(0), scripts.systems.camera.toY(0))
-    scripts.systems.collision.debug_draw(dt)
+    scripts.systems.collision.debug_draw()
     core.run("mapImage", scripts.systems.rendering.renderMapTile)
    scripts.systems.collision.debug_draw(dt)
     core.run("mapImage",scripts.systems.rendering.renderMapTile)
@@ -82,8 +84,10 @@ function ctx:draw()
 
     love.graphics.draw(ctx.dwarf_sprite_batch, 0, 0)
     core.run("dragonHead", scripts.systems.rendering.renderFire.draw)
+    core.run("ballista", scripts.systems.rendering.renderBallista)
+    core.run("arrow", scripts.systems.rendering.renderArrow)
 
-    core.run("player", scripts.systems.rendering.renderDragon, { dt = dt })
+    core.run("player", scripts.systems.rendering.renderDragon)
 
     if DEBUGVALUE ~= nil then
         local r, g, b, a = love.graphics.getColor()

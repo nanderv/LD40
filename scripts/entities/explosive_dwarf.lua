@@ -1,4 +1,4 @@
-SIZE = 32
+local SIZE = 32
 
 return function(x, y, rotation)
     local col_shape = {
@@ -9,7 +9,7 @@ return function(x, y, rotation)
         moving = true
     }
     local position = { x = x, y = y, rotation = rotation }
-    return{
+    return {
         collision = col_shape,
         position = position,
         dwarf = true,
@@ -17,6 +17,9 @@ return function(x, y, rotation)
         offset = math.random(),
         updateframe = math.random(4),
         hp = 30,
-        fuse_offset = math.random(15), gold = 5
+        fuse_offset = math.random(15),
+        gold = 5,
+        speed = 0.16,
+        rotatespeed = 0.5
     }
 end
