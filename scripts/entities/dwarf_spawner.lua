@@ -1,7 +1,7 @@
 local SIZE = 32
-return function(x, y, rotation, type, dps, health)
+return function(x, y, rotation, type, dps, health, gold)
     local col_shape = {
-        type = "wall",
+        type = "spawner",
         box = true,
         polygon = { { x = SIZE / 2, y = SIZE / 2 }, { x = SIZE / 2, y = -SIZE / 2 }, { x = -SIZE / 2, y = -SIZE / 2 }, { x = -SIZE / 2, y = SIZE / 2 } },
         dynamic = false
@@ -15,7 +15,8 @@ return function(x, y, rotation, type, dps, health)
         spawn_type = type,
         counter = 0,
         spawns = 0,
-        hp = health
+        hp = health,
+        gold = gold
     }
     return dwarf_spawner
 end

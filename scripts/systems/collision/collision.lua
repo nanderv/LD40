@@ -137,6 +137,10 @@ s.functions.reset = function()
         function(_, b)
             b.dhp = 60
         end)
+    lib.add_rule("fire", "spawner",
+        function(_, b)
+            b.dhp = 60
+        end)
     lib.add_rule("dwarf", "player", function(_, b) b.hp = b.hp - 1 end)
 
     lib.add_rule("explosive_dwarf", "head", function(a, b)
