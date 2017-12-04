@@ -17,7 +17,7 @@ return function(x, y, rotation)
         updateframe = math.random(4),
         hp = 20,
         gold = 1,
-        speed = 0.08,
+        speed = 0.16,
         rotatespeed = 0.5
     }
 

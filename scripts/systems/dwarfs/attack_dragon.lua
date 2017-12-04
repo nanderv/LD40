@@ -4,8 +4,8 @@ return function(entity, args)
     -- end
 
     local dt = args.dt
-    local speed = entity.speed
-    local rotatespeed = entity.rotatespeed
+    local speed = entity.speed or 0.16
+    local rotatespeed = entity.rotatespeed or 0.5
 
     local pp, ep = core.filter.get("player").position, entity.position
 

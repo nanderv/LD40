@@ -2,7 +2,6 @@ local height = 32
 local width = 8
 return function(x, y, rotation, range, damage, offset)
     local col_shape = {
-        -- Behaviours should be the same as a spawner
         type = "arrow",
         box = true,
         polygon = { { x = width / 2, y = height / 2 }, { x = width / 2, y = -height / 2 }, { x = -width / 2, y = -height / 2 }, { x = -width / 2, y = height / 2 } },
