@@ -10,9 +10,27 @@ local areas = {}
 local symbols = { Wall = '#', Empty = ' ', DoorN = ' ', DoorS = ' ', DoorE = ' ', DoorW = ' ' }
 areas.map = {}
 areas.roomOptions = {}
+local locs = {}
+local ll = {4, 8, 16 }
+for _,v in ipairs(ll)do
+    for _,w in ipairs(ll)do
+        locs[#locs+1] = {x=v,y=w}
+    end
+end
+pprint(locs)
+local spawnPatterns = {}
+spawnPatterns[1] = { }
+spawnPatterns[2] = {locs[5] }
+spawnPatterns[3] = {locs[2], locs[8] }
+spawnPatterns[4] = {locs[2], locs[5], locs[8] }
+spawnPatterns[5] = {locs[4], locs[5], locs[6] }
+spawnPatterns[6] = {locs[1], locs[3], locs[7], locs[9] }
+spawnPatterns[7] = locs
 
+local currentPattern = 1
+local mult = 1
 local grounds = { "ground" }
-local middles = { "middle" }
+local middles = { "middle", "middle2" }
 local wall = { "testmap" }
 function areas.genAll()
     local height, width = 40, 40
@@ -53,6 +71,15 @@ function areas.genAll()
 end
 
 function areas.genArea(x, y, first)
+    for k,v in pairs(spawnPatterns[currentPattern]) do
+        -- Spawn Spawner
+        print("SPAWN")
+    end
+    currentPattern = currentPattern + mult
+    while currentPattern > #spawnPatterns do
+        currentPattern = currentPattern - #spawnPatterns
+    end
+    mult = mult + 5
     areas.map[x .. ":" .. y] = "_"
 end
 
