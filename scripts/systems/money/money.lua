@@ -24,7 +24,7 @@ money.update = function(entity, args)
         if ent.money.total + ent.money.pocket_treasure >= ent.money.lastgiven * 1.05 then
             HOARD.current_turn_len = 0
             ent.current_turn_len = 0
-            scripts.systems.money.money.end_raid(false)
+            scripts.systems.money.money.end_raid(true)
             DOSWITCH = true
         else
             money.next_turn()
