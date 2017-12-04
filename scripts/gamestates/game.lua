@@ -30,8 +30,7 @@ function ctx:enter()
     core.entity.add(neck)
     local head = scripts.entities.dragonHead(neck)
     core.entity.add(head)
-    core.entity.add(scripts.entities.dwarf_spawner(0.5 * 32 * 20 - 500, 32 * 20.5 * 20, math.pi / 2, "explosive_dwarf", 1, 300, 100))
-    core.entity.add(scripts.entities.dwarf_spawner(0.5 * 32 * 20 + 500, 32 * 20.5 * 20, math.pi / 2, "dwarf", 1, 300, 100))
+
     CURRENTFRAME = 0
     local spread = 1000
     --    for i = 1, 1000 do
@@ -78,6 +77,7 @@ function ctx:draw()
 
 
     core.run("explosion", scripts.systems.rendering.renderExplosion, { dt = dt })
+    core.run("dwarfSpawner", scripts.systems.rendering.renderSpawn, { dt = dt })
 
 
     love.graphics.draw(ctx.dwarf_sprite_batch, 0, 0)
