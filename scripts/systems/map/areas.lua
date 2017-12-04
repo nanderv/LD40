@@ -26,7 +26,7 @@ spawnPatterns[4] = {locs[2], locs[5], locs[8] }
 spawnPatterns[5] = {locs[4], locs[5], locs[6] }
 spawnPatterns[6] = {locs[1], locs[3], locs[7], locs[9] }
 spawnPatterns[7] = locs
-
+local roomsGenerated = 1
 local currentPattern = 1
 local mult = 1
 local grounds = { "ground" }
@@ -71,9 +71,15 @@ function areas.genAll()
 end
 
 function areas.genArea(x, y, first)
+    if x==1 and y == 20 then
+        areas.map[x .. ":" .. y] = "_"
+        return
+    end
     for k,v in pairs(spawnPatterns[currentPattern]) do
         -- Spawn Spawner
         print("SPAWN")
+        core.entity.add(scripts.entities.dwarf_spawner(32*v.x + x * 32 * 20 , 32 *v.y + y* 32* 20, math.pi / 2, "dwarf", 1, 300, 100))
+
     end
     currentPattern = currentPattern + mult
     while currentPattern > #spawnPatterns do
