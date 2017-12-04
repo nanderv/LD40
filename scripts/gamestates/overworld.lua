@@ -1,6 +1,5 @@
 local ctx = GS.new()
 local input = { text = "" }
-local music = love.audio.newSource(love.filesystem.newFile("assets/music/Exploding Bards.ogg"), "stream")
 
 function ctx:enter(from)
     print("Entered " .. self.name)
@@ -8,7 +7,7 @@ function ctx:enter(from)
     ctx.from = from
     scripts.systems.money.money.end_raid(false)
 
-    love.audio.play(music)
+
 end
 
 function ctx:update(dt)
@@ -43,7 +42,7 @@ end
 
 local background_image = love.graphics.newImage("assets/images/backgrounds/background.png")
 function ctx:draw()
-    love.graphics.draw(background_image, 0, 40, 0, love.graphics.getWidth() / 1366, (love.graphics.getHeight() - 40) / 725, 0, 0)
+    love.graphics.draw(background_image,0,0,0,love.graphics.getWidth( )/background_image:getWidth(), love.graphics.getHeight()/background_image:getHeight())
     suit.draw()
     core.run("hoard", scripts.systems.money.money.show_money, {})
     love.graphics.print(scripts.systems.money.money.dialog.get(), love.graphics.getWidth() / 2 - 400, 360)
@@ -58,7 +57,6 @@ function ctx:leave()
     scripts.systems.money.money.start_raid()
     love.mouse.setGrabbed(false)
 
-    love.audio.stop(music)
     print('Leaving ' .. self.name)
 end
 

@@ -1,4 +1,5 @@
 DEBUG = true
+local music = love.audio.newSource(love.filesystem.newFile("assets/music/Exploding Bards.ogg"), "stream"):play()
 
 GS = require "lib.gamestate"
 love.math.setRandomSeed(love.timer.getTime())
@@ -30,7 +31,7 @@ HOARD = { money = { total = 0, lastgiven = 952, totalgiven = 0, lastleft = 0, po
 function love.load()
     GS.registerEvents()
     core.entity.add(HOARD)
-    GS.push(scripts.gamestates.overworld)
+    GS.push(scripts.gamestates.textslide)
 end
 
 function love.mousepressed(x, y, button)
