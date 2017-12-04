@@ -48,6 +48,7 @@ slides[#slides+1] = getLineSlide("Father: Ok...")
 slides[#slides+1] = getLineSlide("Father: I need to get more gold.\n\n Those pesky dwarves must have stolen some.\n\n They will burn.")
 
 slides[#slides+1] = getLineSlide("Every day, your child needs money for college. To get money, you need to raid.\nWhile you're off raiding, the dwarves will steal your gold.")
+slides[#slides+1] = getLineSlide("Use WASD to move and your mouse to burn those dwarfs!")
 
 function ctx:draw()
     slides[ctx.slide]()

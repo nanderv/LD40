@@ -1,4 +1,4 @@
-DEBUG = true
+DEBUG = false
 local music = love.audio.newSource(love.filesystem.newFile("assets/music/Exploding Bards.ogg"), "stream")
 music:setLooping(true)
 music:play()
@@ -19,7 +19,6 @@ love.math.random()
 love.math.random()
 love.math.random()
 love.math.random()
-DEBUG=true
 
 pprint = require 'lib.pprint'
 require 'lib.helpers.core_funcs'
