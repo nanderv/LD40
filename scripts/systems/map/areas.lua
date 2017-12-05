@@ -53,12 +53,15 @@ function areas.genAll()
         areas.map[x .. ":" .. y] = " "
         x = x + 1
     end
-    core.entity.add(scripts.entities.ground(-1, 19, grass))
-    core.entity.add(scripts.entities.ground(-1, 20, grass))
-    core.entity.add(scripts.entities.ground(-1, 21, grass))
-    core.entity.add(scripts.entities.ground(-2, 19, grass))
-    core.entity.add(scripts.entities.ground(-2, 20, grass))
-    core.entity.add(scripts.entities.ground(-2, 21, grass))
+    for i=1,40 do
+        core.entity.add(scripts.entities.ground(-1, i, grass))
+        core.entity.add(scripts.entities.ground(-2, i, grass))
+        core.entity.add(scripts.entities.ground(41, i, grass))
+        core.entity.add(scripts.entities.ground(i, -1, grass))
+        core.entity.add(scripts.entities.ground(i, 41, grass))
+        core.entity.add(scripts.entities.ground(i, 42, grass))
+    end
+
     for y = 0, #tiles[1] do
         local line = ''
         for x = 0, #tiles do
@@ -91,12 +94,12 @@ function areas.genArea(x, y, first)
             if num > 0.9 then
                 core.entity.add(scripts.entities.ballista(32 * v.x + x * 32 * 20, 32 * v.y + y * 32 * 20, math.pi / 2, 1, 100, 100, 500, 20))
             elseif num > 0.75 then
-                core.entity.add(scripts.entities.dwarf_spawner(32 * v.x + x * 32 * 20, 32 * v.y + y * 32 * 20, math.pi / 2, "explosive_dwarf", 10 * #spawnPatterns[currentPattern] / math.sqrt(roomsGenerated), 80, 200))
+                core.entity.add(scripts.entities.dwarf_spawner(32 * v.x + x * 32 * 20, 32 * v.y + y * 32 * 20, math.pi / 2, "explosive_dwarf", 5 * #spawnPatterns[currentPattern] / math.sqrt(roomsGenerated), 40, 200))
             else
-                core.entity.add(scripts.entities.dwarf_spawner(32 * v.x + x * 32 * 20, 32 * v.y + y * 32 * 20, math.pi / 2, "dwarf", 6 * #spawnPatterns[currentPattern] / math.sqrt(roomsGenerated), 80, 100))
+                core.entity.add(scripts.entities.dwarf_spawner(32 * v.x + x * 32 * 20, 32 * v.y + y * 32 * 20, math.pi / 2, "dwarf", 3 * #spawnPatterns[currentPattern] / math.sqrt(roomsGenerated), 40, 100))
             end
         else
-            core.entity.add(scripts.entities.dwarf_spawner(32 * v.x + x * 32 * 20, 32 * v.y + y * 32 * 20, math.pi / 2, "dwarf", 6 * #spawnPatterns[currentPattern] / math.sqrt(roomsGenerated), 80, 100))
+            core.entity.add(scripts.entities.dwarf_spawner(32 * v.x + x * 32 * 20, 32 * v.y + y * 32 * 20, math.pi / 2, "dwarf", 3 * #spawnPatterns[currentPattern] / math.sqrt(roomsGenerated), 40, 100))
         end
     end
     currentPattern = currentPattern + mult
