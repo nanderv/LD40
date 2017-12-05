@@ -56,7 +56,7 @@ function ctx:update(dt)
     ctx.dwarf_sprite_batch:flush()
     suit.layout:reset((love.graphics.getWidth() / 4) * 2, 33)
     suit.Slider({ value = core.filter.get("player").hp, min = 0, max = 1020 }, { id = 'Health', valign = "top", notMouseEditable = true }, suit.layout:col(love.graphics.getWidth() / 4, 15))
-    suit.Slider({ value = core.filter.get("hoard").current_turn_len, min = 0, max = 120 }, { id = 'Day progress', valign = "top", notMouseEditable = true }, suit.layout:col())
+    suit.Slider({ value = core.filter.get("hoard").current_turn_len, min = 0, max = 240 }, { id = 'Day progress', valign = "top", notMouseEditable = true }, suit.layout:col())
     suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Hotbar", font = love.graphics.getFont(), valign = "bottom" }, -10, -10, love.graphics.getWidth() + 10, 55)
     core.run("hoard", scripts.systems.money.money.update, { dt = dt })
     if DOSWITCH then

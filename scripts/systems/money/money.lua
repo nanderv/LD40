@@ -1,4 +1,4 @@
-local daylen = 120 -- seconds
+local daylen = 240 -- seconds
 
 local money = {}
 
@@ -104,6 +104,7 @@ money.end_raid = function(alive)
     if not ent.in_raid then return end
 
     if alive then
+        love.audio.newSource("assets/sfx/ChatNotification.ogg", "static"):play()
         ent.money.total, ent.money.pocket_treasure = ent.money.total + ent.money.pocket_treasure, 0
     else
         ent.money.pocket_treasure = 0
@@ -117,7 +118,6 @@ money.end_raid = function(alive)
     ent.in_raid = false
     ent.raid_leve = ent.raid_level + 1
     LAST_RANDOM = nil
-    love.audio.newSource("assets/sfx/ChatNotification.ogg", "static"):play()
 end
 
 money.get_last_left = function()

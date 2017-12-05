@@ -28,17 +28,17 @@ function ctx:update(dt)
         scripts.systems.money.money.give_to_son()
     end
     suit.layout:pop()
-    if suit.Button("Begin raid", suit.layout:row()).hit and scripts.systems.money.money.get_money_ent().current_turn_len < 120 and scripts.systems.money.money.get_money_ent().last_turn_alive_or_new_day then
+    if suit.Button("Begin raid", suit.layout:row()).hit and scripts.systems.money.money.get_money_ent().current_turn_len < 240 and scripts.systems.money.money.get_money_ent().last_turn_alive_or_new_day then
         print("Switching to game")
         GS.switch(scripts.gamestates.game)
     end
-    if suit.Button("Next day", suit.layout:row()).hit and (scripts.systems.money.money.get_money_ent().son.happy_this_turn or (scripts.systems.money.money.get_money_ent().money.total < scripts.systems.money.money.get_money_ent().money.lastgiven and scripts.systems.money.money.get_money_ent().current_turn_len >= 120)) then
+    if suit.Button("Next day", suit.layout:row()).hit and (scripts.systems.money.money.get_money_ent().son.happy_this_turn or (scripts.systems.money.money.get_money_ent().money.total < scripts.systems.money.money.get_money_ent().money.lastgiven and scripts.systems.money.money.get_money_ent().current_turn_len >= 240)) then
         scripts.systems.money.money.next_turn()
     end
     suit.layout:reset((love.graphics.getWidth() / 4) * 2, 33)
     suit.Slider({ value = 1000, min = 0, max = 1020 }, { id = 'Health', valign = "top", notMouseEditable = true }, suit.layout:col(love.graphics.getWidth() / 4, 15))
-    suit.Slider({ value = core.filter.get("hoard").current_turn_len, min = 0, max = 120 }, { id = 'Day progress', valign = "top", notMouseEditable = true }, suit.layout:col())
-    suit._instance:registerDraw(suit._instance.theme.Button, "Chat: <Son's name here> (kid)", { id = "Chatbox_Title", font = love.graphics.getFont() }, love.graphics.getWidth() / 2 - 405, 300, 400, 50)
+    suit.Slider({ value = core.filter.get("hoard").current_turn_len, min = 0, max = 240 }, { id = 'Day progress', valign = "top", notMouseEditable = true }, suit.layout:col())
+    suit._instance:registerDraw(suit._instance.theme.Button, "Chat: Your son", { id = "Chatbox_Title", font = love.graphics.getFont() }, love.graphics.getWidth() / 2 - 405, 300, 400, 50)
     suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Chatbox", font = love.graphics.getFont() }, love.graphics.getWidth() / 2 - 405, 355, 400, 105)
     suit._instance:registerDraw(suit._instance.theme.Button, "", { id = "Hotbar", font = love.graphics.getFont(), valign = "bottom" }, -10, -10, love.graphics.getWidth() + 10, 55)
 
