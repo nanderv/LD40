@@ -27,7 +27,7 @@ slides[1] = function()
     local oldfont = love.graphics.getFont()
     love.graphics.draw(background_image,0,0,0,love.graphics.getWidth( )/background_image:getWidth(), love.graphics.getHeight()/background_image:getHeight())
     love.graphics.setFont(font)
-    love.graphics.print("Your Gamename Could Be Here", 200, 200)
+    love.graphics.print("Making Ends Meet", 200, 200)
     love.graphics.setFont(oldfont)
 end
 local function getLineSlide(line)

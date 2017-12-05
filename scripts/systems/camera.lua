@@ -40,10 +40,10 @@ s.update = function()
 end
 function s.toX(x)
     local camera = core.filter.get("camera") or {x=0,y=0 }
-    return x - camera.position.x
+    return x - math.floor(camera.position.x)
 end
 function s.toY(y)
     local camera = core.filter.get("camera") or {x=0,y=0 }
-    return y - camera.position.y
+    return y - math.floor(camera.position.y)
 end
 return s
