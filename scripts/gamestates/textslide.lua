@@ -40,8 +40,9 @@ local function getLineSlide(line)
         end
 end
 local function getImageSlide(image)
+    local l_img = love.graphics.newImage(image)
     return function()
-        love.graphics.draw(love.graphics.newImage(image),0,0,0,love.graphics.getWidth( )/background_image:getWidth(), love.graphics.getHeight()/background_image:getHeight())
+        love.graphics.draw(l_img,0,0,0,love.graphics.getWidth( )/background_image:getWidth(), love.graphics.getHeight()/background_image:getHeight())
     end
 end
 slides[#slides+1] = getImageSlide("assets/images/backgrounds/dialogue window plus background1.png")
