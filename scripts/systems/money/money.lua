@@ -183,7 +183,7 @@ money.show_money = function(ent)
     love.graphics.printf("Total in stash: " .. ent.money.total, 10, 10, quanta, "center")
     love.graphics.printf("Treasure in pocket: " .. ent.money.pocket_treasure, 10 + quanta, 10, quanta, "center")
     love.graphics.printf("Health", 10 + (2 * quanta), 10, quanta, "center")
-    love.graphics.printf("Day progress", 10 + (3 * quanta), 10, quanta, "center")
+    love.graphics.printf("Day "..DAY, 10 + (3 * quanta), 10, quanta, "center")
     love.graphics.setFont(oldfont)
 
     if DEBUG then

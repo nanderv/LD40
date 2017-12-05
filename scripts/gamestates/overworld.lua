@@ -58,11 +58,11 @@ function ctx:draw()
         love.graphics.print(collectgarbage('count') / 1024, 50, 30)
     end
 end
-
+DAY = 1
 function ctx:leave()
     scripts.systems.money.money.start_raid()
     love.mouse.setGrabbed(false)
-
+    DAY = DAY + 1
     print('Leaving ' .. self.name)
 end
 
